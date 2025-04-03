@@ -23,11 +23,11 @@ Feature: Admin
   Scenario: Sign in and receive a token
     Then validate that the user is signed in.
 
-  Scenario Outline: Create a teacher
-    When admin creates a teacher with "<username>" username, "<password>" password, and "<role>" role.
-    Then validate teacher is created "<message>".
+  Scenario Outline: Create a user
+    When admin creates a user with "<username>" username, "<password>" password, and "<role>" role.
+    Then validate user is created "<message>".
 
     Examples:
-      | username  | password  | role     | message                           |
-      | teacher9  | teacher9  | teacher  | teacher 'teacher9' created successfully  |
-      | teacher10 | teacher10 | teacher  | teacher 'teacher10' created successfully |
+      | username  | password  | role       | message                                    |
+      | teacher11 | teacher11 | teacher    | teacher 'teacher11' created successfully   |
+      | moderator | moderator | moderator  | moderator 'moderator' created successfully |

@@ -120,10 +120,10 @@ namespace BackEndAutomation.Tests.BBDTests.FeatureFiles
         }
         
         [NUnit.Framework.TestAttribute()]
-        [NUnit.Framework.DescriptionAttribute("Create a teacher")]
-        [NUnit.Framework.TestCaseAttribute("teacher9", "teacher9", "teacher", "teacher \'teacher9\' created successfully", null)]
-        [NUnit.Framework.TestCaseAttribute("teacher10", "teacher10", "teacher", "teacher \'teacher10\' created successfully", null)]
-        public async System.Threading.Tasks.Task CreateATeacher(string username, string password, string role, string message, string[] exampleTags)
+        [NUnit.Framework.DescriptionAttribute("Create a user")]
+        [NUnit.Framework.TestCaseAttribute("teacher11", "teacher11", "teacher", "teacher \'teacher11\' created successfully", null)]
+        [NUnit.Framework.TestCaseAttribute("moderator", "moderator", "moderator", "moderator \'moderator\' created successfully", null)]
+        public async System.Threading.Tasks.Task CreateAUser(string username, string password, string role, string message, string[] exampleTags)
         {
             string[] tagsOfScenario = exampleTags;
             System.Collections.Specialized.OrderedDictionary argumentsOfScenario = new System.Collections.Specialized.OrderedDictionary();
@@ -131,7 +131,7 @@ namespace BackEndAutomation.Tests.BBDTests.FeatureFiles
             argumentsOfScenario.Add("password", password);
             argumentsOfScenario.Add("role", role);
             argumentsOfScenario.Add("message", message);
-            global::Reqnroll.ScenarioInfo scenarioInfo = new global::Reqnroll.ScenarioInfo("Create a teacher", null, tagsOfScenario, argumentsOfScenario, featureTags);
+            global::Reqnroll.ScenarioInfo scenarioInfo = new global::Reqnroll.ScenarioInfo("Create a user", null, tagsOfScenario, argumentsOfScenario, featureTags);
 #line 26
   this.ScenarioInitialize(scenarioInfo);
 #line hidden
@@ -146,10 +146,10 @@ namespace BackEndAutomation.Tests.BBDTests.FeatureFiles
   await this.FeatureBackgroundAsync();
 #line hidden
 #line 27
-    await testRunner.WhenAsync(string.Format("admin creates a teacher with \"{0}\" username, \"{1}\" password, and \"{2}\" role.", username, password, role), ((string)(null)), ((global::Reqnroll.Table)(null)), "When ");
+    await testRunner.WhenAsync(string.Format("admin creates a user with \"{0}\" username, \"{1}\" password, and \"{2}\" role.", username, password, role), ((string)(null)), ((global::Reqnroll.Table)(null)), "When ");
 #line hidden
 #line 28
-    await testRunner.ThenAsync(string.Format("validate teacher is created \"{0}\".", message), ((string)(null)), ((global::Reqnroll.Table)(null)), "Then ");
+    await testRunner.ThenAsync(string.Format("validate user is created \"{0}\".", message), ((string)(null)), ((global::Reqnroll.Table)(null)), "Then ");
 #line hidden
             }
             await this.ScenarioCleanupAsync();

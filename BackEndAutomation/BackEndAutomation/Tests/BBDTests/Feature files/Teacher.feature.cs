@@ -30,7 +30,7 @@ namespace BackEndAutomation.Tests.BBDTests.FeatureFiles
         
         private static global::Reqnroll.FeatureInfo featureInfo = new global::Reqnroll.FeatureInfo(new System.Globalization.CultureInfo("en-US"), "Tests/BBDTests/Feature files", "Feature1", "A short summary of the feature", global::Reqnroll.ProgrammingLanguage.CSharp, featureTags);
         
-#line 1 "CreateClass.feature"
+#line 1 "Teacher.feature"
 #line hidden
         
         [NUnit.Framework.OneTimeSetUpAttribute()]

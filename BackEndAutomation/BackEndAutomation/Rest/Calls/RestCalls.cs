@@ -181,7 +181,7 @@ public class RestCalls
         return HandleResponse(response);
     }
 
-    public RestResponse CraeteTeacherCall(string username, string password, string role, string token)
+    public RestResponse CraeteUserCall(string username, string password, string role, string token)
     {
         var request = new RestRequest($"/users/create", Method.Post);
         request.AddHeader("Authorization", $"Bearer {token}");
@@ -192,7 +192,7 @@ public class RestCalls
         request.AddQueryParameter("role", role);
 
         RestResponse response = _client.Execute(request);
-        Console.WriteLine($"CreateTeacher Response: {response.Content}");
+        Console.WriteLine($"CreateUser {role} Response: {response.Content}");
 
         return HandleResponse(response);
     }
