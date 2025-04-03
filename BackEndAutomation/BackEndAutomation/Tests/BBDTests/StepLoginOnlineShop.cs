@@ -31,7 +31,7 @@ namespace BackEndAutomation.Tests.BBDTests
         [When(@"online shop login with ""(.*)"" username and ""(.*)"" password")]
         public void OnlineShopLogin(string username, string password)
         {
-            RestResponse response = restCalls.LoginOnlineShopCall(username, password);
+            RestResponse response = restCalls.SignInUserCall(username, password);
             string tokenValue = extractResponseData.ExtractLoggedInUserToken(response.Content, "access_token");
 
             _scenarioContext.Add("UserToken",tokenValue);
