@@ -28,7 +28,7 @@ namespace BackEndAutomation.Tests.BBDTests.FeatureFiles
         
         private static string[] featureTags = ((string[])(null));
         
-        private static global::Reqnroll.FeatureInfo featureInfo = new global::Reqnroll.FeatureInfo(new System.Globalization.CultureInfo("en-US"), "Tests/BBDTests/Feature files", "Admin", "  Admin authentication and teacher management.", global::Reqnroll.ProgrammingLanguage.CSharp, featureTags);
+        private static global::Reqnroll.FeatureInfo featureInfo = new global::Reqnroll.FeatureInfo(new System.Globalization.CultureInfo("en-US"), "Tests/BBDTests/Feature files", "Admin", "  Admin authentication and user management.", global::Reqnroll.ProgrammingLanguage.CSharp, featureTags);
         
 #line 1 "Admin.feature"
 #line hidden
@@ -83,23 +83,21 @@ namespace BackEndAutomation.Tests.BBDTests.FeatureFiles
         
         public virtual async System.Threading.Tasks.Task FeatureBackgroundAsync()
         {
-#line 19
+#line 5
   #line hidden
-#line 20
+#line 6
     await testRunner.GivenAsync("user signs in with \"admin1\" username and \"admin123\" password.", ((string)(null)), ((global::Reqnroll.Table)(null)), "Given ");
 #line hidden
         }
         
         [NUnit.Framework.TestAttribute()]
         [NUnit.Framework.DescriptionAttribute("Sign in and receive a token")]
-        [NUnit.Framework.CategoryAttribute("tag1")]
         public async System.Threading.Tasks.Task SignInAndReceiveAToken()
         {
-            string[] tagsOfScenario = new string[] {
-                    "tag1"};
+            string[] tagsOfScenario = ((string[])(null));
             System.Collections.Specialized.OrderedDictionary argumentsOfScenario = new System.Collections.Specialized.OrderedDictionary();
             global::Reqnroll.ScenarioInfo scenarioInfo = new global::Reqnroll.ScenarioInfo("Sign in and receive a token", null, tagsOfScenario, argumentsOfScenario, featureTags);
-#line 23
+#line 8
   this.ScenarioInitialize(scenarioInfo);
 #line hidden
             if ((global::Reqnroll.TagHelper.ContainsIgnoreTag(scenarioInfo.CombinedTags) || global::Reqnroll.TagHelper.ContainsIgnoreTag(featureTags)))
@@ -109,10 +107,10 @@ namespace BackEndAutomation.Tests.BBDTests.FeatureFiles
             else
             {
                 await this.ScenarioStartAsync();
-#line 19
+#line 5
   await this.FeatureBackgroundAsync();
 #line hidden
-#line 24
+#line 9
     await testRunner.ThenAsync("validate that the user is signed in.", ((string)(null)), ((global::Reqnroll.Table)(null)), "Then ");
 #line hidden
             }
@@ -132,7 +130,7 @@ namespace BackEndAutomation.Tests.BBDTests.FeatureFiles
             argumentsOfScenario.Add("role", role);
             argumentsOfScenario.Add("message", message);
             global::Reqnroll.ScenarioInfo scenarioInfo = new global::Reqnroll.ScenarioInfo("Create a user", null, tagsOfScenario, argumentsOfScenario, featureTags);
-#line 26
+#line 11
   this.ScenarioInitialize(scenarioInfo);
 #line hidden
             if ((global::Reqnroll.TagHelper.ContainsIgnoreTag(scenarioInfo.CombinedTags) || global::Reqnroll.TagHelper.ContainsIgnoreTag(featureTags)))
@@ -142,13 +140,13 @@ namespace BackEndAutomation.Tests.BBDTests.FeatureFiles
             else
             {
                 await this.ScenarioStartAsync();
-#line 19
+#line 5
   await this.FeatureBackgroundAsync();
 #line hidden
-#line 27
+#line 12
     await testRunner.WhenAsync(string.Format("admin creates a user with \"{0}\" username, \"{1}\" password, and \"{2}\" role.", username, password, role), ((string)(null)), ((global::Reqnroll.Table)(null)), "When ");
 #line hidden
-#line 28
+#line 13
     await testRunner.ThenAsync(string.Format("validate user is created \"{0}\".", message), ((string)(null)), ((global::Reqnroll.Table)(null)), "Then ");
 #line hidden
             }

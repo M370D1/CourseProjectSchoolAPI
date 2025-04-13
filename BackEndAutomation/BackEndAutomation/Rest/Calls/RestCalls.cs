@@ -1,155 +1,5 @@
-﻿//using System.Diagnostics;
-//using System.Xml.Linq;
-//using RestSharp;
-
-//namespace BackEndAutomation.Rest.Calls
-//{
-//    public class RestCalls
-//    {
-//        public RestResponse LoginCall(string url, string username, string password, bool rememberMe = false)
-//        {
-//            RestClientOptions options = new RestClientOptions(url)
-//            {
-//                Timeout = TimeSpan.FromSeconds(120),
-//            };
-
-//            RestClient client = new RestClient(options);
-
-//            RestRequest request = new RestRequest("/users/login", Method.Post);
-
-//            request.AddHeader("Content-Type", "application/json");
-
-//            string body = @"{""usernameOrEmail"":""" + username + @""",""password"":""" + password + @""",""rememberMe"":""" + rememberMe.ToString().ToLower() + @"""}";
-
-//            request.AddStringBody(body, DataFormat.Json);
-
-//            RestResponse response = client.Execute(request);
-
-//            return response;
-//        }
-
-//        public RestResponse GetUserPageInformationCall(string url, string userId, string token)
-//        {
-//            RestClientOptions options = new RestClientOptions(url)
-//            {
-//                Timeout = TimeSpan.FromSeconds(120),
-//            };
-//            RestClient client = new RestClient(options);
-
-//            RestRequest request = new RestRequest($"/users/{userId}", Method.Get);
-
-//            request.AddHeader("Authorization", $"Bearer {token}");
-
-//            RestResponse response = client.Execute(request);
-
-//            return response;
-//        }
-
-//        public RestResponse ToFollowUser(string url, string userIdToFollow, string token, bool isFollowed)
-//        {
-//            string toFollowCommand = isFollowed ? "followUser" : "unfollowUser";
-
-//            RestClientOptions options = new RestClientOptions(url)
-//            {
-//                Timeout = TimeSpan.FromSeconds(120),
-//            };
-
-//            RestClient client = new RestClient(options);
-
-//            RestRequest request = new RestRequest($"/users/{userIdToFollow}", Method.Patch);
-
-//            request.AddHeader("Content-Type", "application/json");
-//            request.AddHeader("Authorization", $"Bearer {token}");
-
-//            string body = @"{""action"":""" + toFollowCommand + @"""}";
-
-//            request.AddStringBody(body, DataFormat.Json);
-
-//            RestResponse response = client.Execute(request);
-
-//            return response;
-//        }
-
-//        public void restPostman()
-//        {
-
-//            RestClientOptions options = new RestClientOptions("http://161.35.202.130:3000")
-//            {
-//                Timeout = TimeSpan.FromSeconds(120),
-//            };
-//            var client = new RestClient(options);
-//            var request = new RestRequest("/users/login", Method.Post);
-//            request.AddHeader("Content-Type", "application/json");
-//            var body = @"{""usernameOrEmail"":""vidko.v"",""password"":""123abc"",""rememberMe"":false}";
-//            request.AddStringBody(body, DataFormat.Json);
-//            RestResponse response = client.Execute(request);
-//            Console.WriteLine(response.Content);
-//        }
-
-//        public RestResponse generalRestCall(
-//            string baseUrl,
-//            string endpoint,
-//            Method method
-//            //string ParametersType = "",
-//            //Dictionary<string, string> paramters = Dictionary<string, string>()
-//            )
-//        {
-//            RestClientOptions options = new RestClientOptions(baseUrl)
-//            {
-//                Timeout = TimeSpan.FromSeconds(120),
-//            };
-//            RestClient client = new RestClient(options);
-//            RestRequest request = new RestRequest(endpoint, method);
-//            //if (ParametersType != string.Empty)
-//            //{
-//            //    foreach (KeyValuePair<string, string> param in paramters)
-//            //    {
-//            //        request.AddParameter(param.Key, param.Value);
-//            //    }
-//            //}
-//            RestResponse response = client.Execute(request);
-
-//            return response;
-//        }
-///////////////////////////////////////////////////////////////////////////////////////////
-//        public RestResponse SignInUserCall(string username, string password)
-//        {
-//            var options = new RestClientOptions("https://schoolprojectapi.onrender.com")
-//            {
-//                Timeout = TimeSpan.FromSeconds(120),
-//            };
-//            var client = new RestClient(options);
-//            var requestSignIn = new RestRequest("/auth/login", Method.Post);
-//            requestSignIn.AlwaysMultipartFormData = true;
-//            requestSignIn.AddParameter("username", username);
-//            requestSignIn.AddParameter("password", password);
-//            RestResponse response = client.Execute(requestSignIn);
-//            Console.WriteLine(response.Content);
-//            return response;
-//        }
-
-//        public RestResponse CraeteTeacherCall(string username, string password, string role, string token)
-//        {
-//            var options = new RestClientOptions("https://schoolprojectapi.onrender.com")
-//            {
-//                Timeout = TimeSpan.FromSeconds(120),
-//            };
-//            var client = new RestClient(options);
-//            var requestCreateTeacher = new RestRequest($"/users/create" +
-//                $"?username={username}" +
-//                $"&password={password}" +
-//                $"&role={role}", 
-//                Method.Post);
-//            requestCreateTeacher.AlwaysMultipartFormData = true;
-//            requestCreateTeacher.AddHeader("Authorization", $"Bearer {token}");
-//            RestResponse response = client.Execute(requestCreateTeacher);
-//            Console.WriteLine(response.Content);
-//            return response;
-//        }
-//    }
-//}
-
-using System;
+﻿using System;
+using System.Reactive.Subjects;
 using Newtonsoft.Json.Linq;
 using RestSharp;
 
@@ -197,6 +47,51 @@ public class RestCalls
         return HandleResponse(response);
     }
 
+    public RestResponse CraeteClassCall(string classname, string subject_1, string subject_2, string subject_3, string token)
+    {
+        var request = new RestRequest($"/classes/create", Method.Post);
+        request.AddHeader("Authorization", $"Bearer {token}");
+
+        // API expects query parameters, not form-data or JSON
+        request.AddQueryParameter("class_name", classname);
+        request.AddQueryParameter("subject_1", subject_1);
+        request.AddQueryParameter("subject_2", subject_2);
+        request.AddQueryParameter("subject_3", subject_3);
+
+        RestResponse response = _client.Execute(request);
+        Console.WriteLine($"CreateClass {classname} Response: {response.Content}");
+
+        return HandleResponse(response);
+    }
+
+    public RestResponse AddStudentCall(string studentName, string class_id, string token)
+    {
+        var request = new RestRequest($"/classes/add_student", Method.Post);
+        request.AddHeader("Authorization", $"Bearer {token}");
+
+        request.AddQueryParameter("name", studentName);
+        request.AddQueryParameter("class_id", class_id);
+
+        RestResponse response = _client.Execute(request);
+        Console.WriteLine($"AddStudent {studentName} Response: {response.Content}");
+
+        return HandleResponse(response);
+    }
+
+    public RestResponse AddGradeCall(int grade, string student_id, string subject, string token)
+    {
+        var request = new RestRequest($"/grades/add", Method.Put);
+        request.AddHeader("Authorization", $"Bearer {token}");
+
+        request.AddQueryParameter("grade", grade);
+        request.AddQueryParameter("student_id", student_id);
+        request.AddQueryParameter("subject", subject);
+
+        RestResponse response = _client.Execute(request);
+        Console.WriteLine($"AddGrade {grade} to {student_id} in {subject}. Response: {response.Content}");
+
+        return HandleResponse(response);
+    }
 
     private RestResponse HandleResponse(RestResponse response)
     {
