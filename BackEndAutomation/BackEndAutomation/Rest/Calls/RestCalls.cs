@@ -93,6 +93,20 @@ public class RestCalls
         return HandleResponse(response);
     }
 
+    public RestResponse ConnectParentCall(string parent_username, string student_id, string token)
+    {
+        var request = new RestRequest($"/users/connect_parent", Method.Put);
+        request.AddHeader("Authorization", $"Bearer {token}");
+
+        request.AddQueryParameter("parent_username", parent_username);
+        request.AddQueryParameter("student_id", student_id);
+
+        RestResponse response = _client.Execute(request);
+        Console.WriteLine($"Connect {parent_username} to student with id: {student_id}. Response: {response.Content}");
+
+        return HandleResponse(response);
+    }
+
     private RestResponse HandleResponse(RestResponse response)
     {
         if (!response.IsSuccessful)

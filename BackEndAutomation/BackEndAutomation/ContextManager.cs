@@ -48,5 +48,6 @@ namespace BackEndAutomation.Utilities
         public const string SubjectKey = "Subject";
         public const string NewGradeKey = "NewGrade";
         public const string ExtentTestKey = "ExtentTest";
+        public const string ParentUsernameKey = "ParentUsername";
     }
 }

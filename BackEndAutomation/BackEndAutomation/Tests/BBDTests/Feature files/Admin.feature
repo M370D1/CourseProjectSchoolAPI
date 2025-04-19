@@ -13,6 +13,15 @@
     Then validate user is created "<message>".
 
     Examples:
-      | username  | password  | role       | message                                    |
-      | teacher11 | teacher11 | teacher    | teacher 'teacher11' created successfully   |
-      | moderator | moderator | moderator  | moderator 'moderator' created successfully |
+      | username  | password  | role      | message                                    |
+      | teacher11 | teacher11 | teacher   | teacher 'teacher11' created successfully   |
+      | moderator | moderator | moderator | moderator 'moderator' created successfully |
+      | parent1   | parent1   | parent    | parent 'parent1' created successfully      |
+
+  Scenario Outline: Connect parent to student
+    When admin connect parent "<parent_username>" to student with id: "<student_id>".
+    Then validate parent is connected to student "<message>".
+
+    Examples: 
+    | parent_username | student_id                           | message                  |
+    | parent1         | 43bac5dc-ecba-4826-8b8d-204cecd07b18 | Parent linked to student |

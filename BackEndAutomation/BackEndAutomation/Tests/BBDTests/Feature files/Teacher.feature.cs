@@ -159,7 +159,6 @@ await this.FeatureBackgroundAsync();
         [NUnit.Framework.DescriptionAttribute("Add stuednt to class")]
         [NUnit.Framework.TestCaseAttribute("Student1", "ecadac35-dd50-4120-b876-411ec0d51cd9", "Student added", null)]
         [NUnit.Framework.TestCaseAttribute("Student2", "2f2fa5e2-6c5e-4e58-80b4-bf469eff79e8", "Student added", null)]
-        [NUnit.Framework.TestCaseAttribute("Student3", "incorrect-class-id", "Error message", null)]
         public async System.Threading.Tasks.Task AddStuedntToClass(string name, string class_Id, string message, string[] exampleTags)
         {
             string[] tagsOfScenario = exampleTags;
@@ -195,7 +194,6 @@ await this.FeatureBackgroundAsync();
         [NUnit.Framework.DescriptionAttribute("Add grade to student.")]
         [NUnit.Framework.TestCaseAttribute("43bac5dc-ecba-4826-8b8d-204cecd07b18", "History", "2", "Grade added", null)]
         [NUnit.Framework.TestCaseAttribute("43bac5dc-ecba-4826-8b8d-204cecd07b18", "Math", "5", "Grade added", null)]
-        [NUnit.Framework.TestCaseAttribute("incorrect student id", "Math", "3", "Error message", null)]
         public async System.Threading.Tasks.Task AddGradeToStudent_(string student_Id, string subject, string grade, string message, string[] exampleTags)
         {
             string[] tagsOfScenario = exampleTags;
@@ -242,7 +240,7 @@ await this.FeatureBackgroundAsync();
             argumentsOfScenario.Add("newGrade", newGrade);
             argumentsOfScenario.Add("newMessage", newMessage);
             global::Reqnroll.ScenarioInfo scenarioInfo = new global::Reqnroll.ScenarioInfo("Update grade", null, tagsOfScenario, argumentsOfScenario, featureTags);
-#line 40
+#line 41
 this.ScenarioInitialize(scenarioInfo);
 #line hidden
             if ((global::Reqnroll.TagHelper.ContainsIgnoreTag(scenarioInfo.CombinedTags) || global::Reqnroll.TagHelper.ContainsIgnoreTag(featureTags)))
@@ -255,16 +253,16 @@ this.ScenarioInitialize(scenarioInfo);
 #line 5
 await this.FeatureBackgroundAsync();
 #line hidden
-#line 41
+#line 42
  await testRunner.WhenAsync(string.Format("teacher add grade: \"{0}\", to student: \"{1}\", in subject: \"{2}\".", grade, student_Id, subject), ((string)(null)), ((global::Reqnroll.Table)(null)), "When ");
 #line hidden
-#line 42
+#line 43
  await testRunner.ThenAsync(string.Format("validate that grade is added to student \"{0}\".", message), ((string)(null)), ((global::Reqnroll.Table)(null)), "Then ");
 #line hidden
-#line 43
+#line 44
  await testRunner.ThenAsync(string.Format("teacher update grade to \"{0}\".", newGrade), ((string)(null)), ((global::Reqnroll.Table)(null)), "Then ");
 #line hidden
-#line 44
+#line 45
  await testRunner.ThenAsync(string.Format("validate that grade is updated \"{0}\".", newMessage), ((string)(null)), ((global::Reqnroll.Table)(null)), "Then ");
 #line hidden
             }

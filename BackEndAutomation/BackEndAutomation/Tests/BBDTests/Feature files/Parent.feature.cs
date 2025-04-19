@@ -20,17 +20,17 @@ namespace BackEndAutomation.Tests.BBDTests.FeatureFiles
     [System.CodeDom.Compiler.GeneratedCodeAttribute("Reqnroll", "2.0.0.0")]
     [System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
     [NUnit.Framework.TestFixtureAttribute()]
-    [NUnit.Framework.DescriptionAttribute("Admin")]
-    public partial class AdminFeature
+    [NUnit.Framework.DescriptionAttribute("Parent")]
+    public partial class ParentFeature
     {
         
         private global::Reqnroll.ITestRunner testRunner;
         
         private static string[] featureTags = ((string[])(null));
         
-        private static global::Reqnroll.FeatureInfo featureInfo = new global::Reqnroll.FeatureInfo(new System.Globalization.CultureInfo("en-US"), "Tests/BBDTests/Feature files", "Admin", "  Admin authentication and user management.", global::Reqnroll.ProgrammingLanguage.CSharp, featureTags);
+        private static global::Reqnroll.FeatureInfo featureInfo = new global::Reqnroll.FeatureInfo(new System.Globalization.CultureInfo("en-US"), "Tests/BBDTests/Feature files", "Parent", "  Parent authentication student grades view.", global::Reqnroll.ProgrammingLanguage.CSharp, featureTags);
         
-#line 1 "Admin.feature"
+#line 1 "Parent.feature"
 #line hidden
         
         [NUnit.Framework.OneTimeSetUpAttribute()]
@@ -84,9 +84,12 @@ namespace BackEndAutomation.Tests.BBDTests.FeatureFiles
         public virtual async System.Threading.Tasks.Task FeatureBackgroundAsync()
         {
 #line 5
-  #line hidden
+#line hidden
 #line 6
-    await testRunner.GivenAsync("user signs in with \"admin1\" username and \"admin123\" password.", ((string)(null)), ((global::Reqnroll.Table)(null)), "Given ");
+ await testRunner.GivenAsync("user signs in with \"parent1\" username and \"parent1\" password.", ((string)(null)), ((global::Reqnroll.Table)(null)), "Given ");
+#line hidden
+#line 7
+ await testRunner.ThenAsync("validate parent is connected to student \"<message>\".", ((string)(null)), ((global::Reqnroll.Table)(null)), "Then ");
 #line hidden
         }
         
@@ -97,8 +100,8 @@ namespace BackEndAutomation.Tests.BBDTests.FeatureFiles
             string[] tagsOfScenario = ((string[])(null));
             System.Collections.Specialized.OrderedDictionary argumentsOfScenario = new System.Collections.Specialized.OrderedDictionary();
             global::Reqnroll.ScenarioInfo scenarioInfo = new global::Reqnroll.ScenarioInfo("Sign in and receive a token", null, tagsOfScenario, argumentsOfScenario, featureTags);
-#line 8
-  this.ScenarioInitialize(scenarioInfo);
+#line 9
+this.ScenarioInitialize(scenarioInfo);
 #line hidden
             if ((global::Reqnroll.TagHelper.ContainsIgnoreTag(scenarioInfo.CombinedTags) || global::Reqnroll.TagHelper.ContainsIgnoreTag(featureTags)))
             {
@@ -108,31 +111,24 @@ namespace BackEndAutomation.Tests.BBDTests.FeatureFiles
             {
                 await this.ScenarioStartAsync();
 #line 5
-  await this.FeatureBackgroundAsync();
+await this.FeatureBackgroundAsync();
 #line hidden
-#line 9
-    await testRunner.ThenAsync("validate that the user is signed in.", ((string)(null)), ((global::Reqnroll.Table)(null)), "Then ");
+#line 10
+ await testRunner.ThenAsync("validate that the user is signed in.", ((string)(null)), ((global::Reqnroll.Table)(null)), "Then ");
 #line hidden
             }
             await this.ScenarioCleanupAsync();
         }
         
         [NUnit.Framework.TestAttribute()]
-        [NUnit.Framework.DescriptionAttribute("Create a user")]
-        [NUnit.Framework.TestCaseAttribute("teacher11", "teacher11", "teacher", "teacher \'teacher11\' created successfully", null)]
-        [NUnit.Framework.TestCaseAttribute("moderator", "moderator", "moderator", "moderator \'moderator\' created successfully", null)]
-        [NUnit.Framework.TestCaseAttribute("parent1", "parent1", "parent", "parent \'parent1\' created successfully", null)]
-        public async System.Threading.Tasks.Task CreateAUser(string username, string password, string role, string message, string[] exampleTags)
+        [NUnit.Framework.DescriptionAttribute("View grades")]
+        public async System.Threading.Tasks.Task ViewGrades()
         {
-            string[] tagsOfScenario = exampleTags;
+            string[] tagsOfScenario = ((string[])(null));
             System.Collections.Specialized.OrderedDictionary argumentsOfScenario = new System.Collections.Specialized.OrderedDictionary();
-            argumentsOfScenario.Add("username", username);
-            argumentsOfScenario.Add("password", password);
-            argumentsOfScenario.Add("role", role);
-            argumentsOfScenario.Add("message", message);
-            global::Reqnroll.ScenarioInfo scenarioInfo = new global::Reqnroll.ScenarioInfo("Create a user", null, tagsOfScenario, argumentsOfScenario, featureTags);
-#line 11
-  this.ScenarioInitialize(scenarioInfo);
+            global::Reqnroll.ScenarioInfo scenarioInfo = new global::Reqnroll.ScenarioInfo("View grades", null, tagsOfScenario, argumentsOfScenario, featureTags);
+#line 12
+this.ScenarioInitialize(scenarioInfo);
 #line hidden
             if ((global::Reqnroll.TagHelper.ContainsIgnoreTag(scenarioInfo.CombinedTags) || global::Reqnroll.TagHelper.ContainsIgnoreTag(featureTags)))
             {
@@ -142,47 +138,13 @@ namespace BackEndAutomation.Tests.BBDTests.FeatureFiles
             {
                 await this.ScenarioStartAsync();
 #line 5
-  await this.FeatureBackgroundAsync();
-#line hidden
-#line 12
-    await testRunner.WhenAsync(string.Format("admin creates a user with \"{0}\" username, \"{1}\" password, and \"{2}\" role.", username, password, role), ((string)(null)), ((global::Reqnroll.Table)(null)), "When ");
+await this.FeatureBackgroundAsync();
 #line hidden
 #line 13
-    await testRunner.ThenAsync(string.Format("validate user is created \"{0}\".", message), ((string)(null)), ((global::Reqnroll.Table)(null)), "Then ");
+ await testRunner.WhenAsync("parent view grades of student with id: \"<student_id>\".", ((string)(null)), ((global::Reqnroll.Table)(null)), "When ");
 #line hidden
-            }
-            await this.ScenarioCleanupAsync();
-        }
-        
-        [NUnit.Framework.TestAttribute()]
-        [NUnit.Framework.DescriptionAttribute("Connect parent to student")]
-        [NUnit.Framework.TestCaseAttribute("parent1", "43bac5dc-ecba-4826-8b8d-204cecd07b18", "Parent linked to student", null)]
-        public async System.Threading.Tasks.Task ConnectParentToStudent(string parent_Username, string student_Id, string message, string[] exampleTags)
-        {
-            string[] tagsOfScenario = exampleTags;
-            System.Collections.Specialized.OrderedDictionary argumentsOfScenario = new System.Collections.Specialized.OrderedDictionary();
-            argumentsOfScenario.Add("parent_username", parent_Username);
-            argumentsOfScenario.Add("student_id", student_Id);
-            argumentsOfScenario.Add("message", message);
-            global::Reqnroll.ScenarioInfo scenarioInfo = new global::Reqnroll.ScenarioInfo("Connect parent to student", null, tagsOfScenario, argumentsOfScenario, featureTags);
-#line 21
-  this.ScenarioInitialize(scenarioInfo);
-#line hidden
-            if ((global::Reqnroll.TagHelper.ContainsIgnoreTag(scenarioInfo.CombinedTags) || global::Reqnroll.TagHelper.ContainsIgnoreTag(featureTags)))
-            {
-                testRunner.SkipScenario();
-            }
-            else
-            {
-                await this.ScenarioStartAsync();
-#line 5
-  await this.FeatureBackgroundAsync();
-#line hidden
-#line 22
-    await testRunner.WhenAsync(string.Format("admin connect parent \"{0}\" to student with id: \"{1}\".", parent_Username, student_Id), ((string)(null)), ((global::Reqnroll.Table)(null)), "When ");
-#line hidden
-#line 23
-    await testRunner.ThenAsync(string.Format("validate parent is connected to student \"{0}\".", message), ((string)(null)), ((global::Reqnroll.Table)(null)), "Then ");
+#line 14
+ await testRunner.ThenAsync("validate grads are visible.", ((string)(null)), ((global::Reqnroll.Table)(null)), "Then ");
 #line hidden
             }
             await this.ScenarioCleanupAsync();
