@@ -30,7 +30,7 @@ namespace BackEndAutomation
             _test.Info($"Attempting to sign in with username: {username}");
 
             RestResponse response = _restCalls.SignInUserCall(username, password);
-            string tokenValue = _extractResponseData.ExtractSignedInUserToken(response.Content, "access_token");
+            string tokenValue = _extractResponseData.Extractor(response.Content, JsonIdentifierKeys.AccessTokenKey);
             _scenarioContext.Add(ContextKeys.UserTokenKey, tokenValue);
             _scenarioContext.Add(ContextKeys.UserNameKey, username);
 

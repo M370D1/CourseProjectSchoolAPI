@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Reactive.Subjects;
+using BackEndAutomation.Utilities;
 using Newtonsoft.Json.Linq;
 using RestSharp;
 
@@ -21,13 +22,12 @@ public class RestCalls
     {
         var request = new RestRequest("/auth/login", Method.Post);
 
-        request.AlwaysMultipartFormData = true; // Switch to form-data
+        request.AlwaysMultipartFormData = true; 
         request.AddParameter("username", username);
         request.AddParameter("password", password);
 
         RestResponse response = _client.Execute(request);
         Console.WriteLine($"SignIn Response: {response.Content}");
-
         return HandleResponse(response);
     }
 
@@ -36,13 +36,17 @@ public class RestCalls
         var request = new RestRequest($"/users/create", Method.Post);
         request.AddHeader("Authorization", $"Bearer {token}");
 
-        // API expects query parameters, not form-data or JSON
         request.AddQueryParameter("username", username);
         request.AddQueryParameter("password", password);
         request.AddQueryParameter("role", role);
 
         RestResponse response = _client.Execute(request);
         Console.WriteLine($"CreateUser {role} Response: {response.Content}");
+
+        if (JObject.Parse(response.Content).ContainsKey(JsonIdentifierKeys.DetailKey))
+        {
+            return response;
+        }
 
         return HandleResponse(response);
     }
@@ -105,6 +109,23 @@ public class RestCalls
         Console.WriteLine($"Connect {parent_username} to student with id: {student_id}. Response: {response.Content}");
 
         return HandleResponse(response);
+    }
+
+    public RestResponse ViewGradesCall(string student_id, string token)
+    {
+        var request = new RestRequest($"/grades/student/{student_id}", Method.Get);
+        request.AddHeader("Authorization", $"Bearer {token}");
+
+        RestResponse response = _client.Execute(request);
+        Console.WriteLine($"View grades to student with id: {student_id}. Response: {response.Content}");
+
+        if (JObject.Parse(response.Content).ContainsKey(JsonIdentifierKeys.DetailKey))
+        {
+            return response;
+        }
+
+        return HandleResponse(response);
+
     }
 
     private RestResponse HandleResponse(RestResponse response)

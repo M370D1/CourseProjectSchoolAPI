@@ -31,7 +31,7 @@ namespace BackEndAutomation
 
             string token = _scenarioContext.Get<string>(ContextKeys.UserTokenKey);
             RestResponse response = _restCalls.AddGradeCall(grade, student_id, subject, token);
-            string message = _extractResponseData.ExtractMessage(response.Content);
+            string message = _extractResponseData.Extractor(response.Content, JsonIdentifierKeys.MessageKey);
             _scenarioContext.Add(ContextKeys.MessageKey, message);
             _scenarioContext.Add(ContextKeys.SubjectKey, subject);
             _scenarioContext.Add(ContextKeys.StudentIdKey, student_id);

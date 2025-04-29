@@ -29,7 +29,7 @@ namespace BackEndAutomation
             _test.Info($"Connecting parent {parent_username}, to student with id: {student_id}.");
             string token = _scenarioContext.Get<string>(ContextKeys.UserTokenKey);
             RestResponse response = _restCalls.ConnectParentCall(parent_username, student_id, token);
-            string message = _extractResponseData.ExtractMessage(response.Content);
+            string message = _extractResponseData.Extractor(response.Content, JsonIdentifierKeys.MessageKey);
             _scenarioContext.Add(ContextKeys.MessageKey, message);
             _scenarioContext.Add(ContextKeys.ParentUsernameKey, parent_username);
             _scenarioContext.Add(ContextKeys.StudentIdKey, student_id);

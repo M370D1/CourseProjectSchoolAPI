@@ -84,9 +84,9 @@ namespace BackEndAutomation.Tests.BBDTests.FeatureFiles
         public virtual async System.Threading.Tasks.Task FeatureBackgroundAsync()
         {
 #line 5
-  #line hidden
+#line hidden
 #line 6
-    await testRunner.GivenAsync("user signs in with \"admin1\" username and \"admin123\" password.", ((string)(null)), ((global::Reqnroll.Table)(null)), "Given ");
+ await testRunner.GivenAsync("user signs in with \"admin1\" username and \"admin123\" password.", ((string)(null)), ((global::Reqnroll.Table)(null)), "Given ");
 #line hidden
         }
         
@@ -98,7 +98,7 @@ namespace BackEndAutomation.Tests.BBDTests.FeatureFiles
             System.Collections.Specialized.OrderedDictionary argumentsOfScenario = new System.Collections.Specialized.OrderedDictionary();
             global::Reqnroll.ScenarioInfo scenarioInfo = new global::Reqnroll.ScenarioInfo("Sign in and receive a token", null, tagsOfScenario, argumentsOfScenario, featureTags);
 #line 8
-  this.ScenarioInitialize(scenarioInfo);
+this.ScenarioInitialize(scenarioInfo);
 #line hidden
             if ((global::Reqnroll.TagHelper.ContainsIgnoreTag(scenarioInfo.CombinedTags) || global::Reqnroll.TagHelper.ContainsIgnoreTag(featureTags)))
             {
@@ -108,31 +108,39 @@ namespace BackEndAutomation.Tests.BBDTests.FeatureFiles
             {
                 await this.ScenarioStartAsync();
 #line 5
-  await this.FeatureBackgroundAsync();
+await this.FeatureBackgroundAsync();
 #line hidden
 #line 9
-    await testRunner.ThenAsync("validate that the user is signed in.", ((string)(null)), ((global::Reqnroll.Table)(null)), "Then ");
+ await testRunner.ThenAsync("validate that the user is signed in.", ((string)(null)), ((global::Reqnroll.Table)(null)), "Then ");
 #line hidden
             }
             await this.ScenarioCleanupAsync();
         }
         
         [NUnit.Framework.TestAttribute()]
-        [NUnit.Framework.DescriptionAttribute("Create a user")]
-        [NUnit.Framework.TestCaseAttribute("teacher11", "teacher11", "teacher", "teacher \'teacher11\' created successfully", null)]
-        [NUnit.Framework.TestCaseAttribute("moderator", "moderator", "moderator", "moderator \'moderator\' created successfully", null)]
-        [NUnit.Framework.TestCaseAttribute("parent1", "parent1", "parent", "parent \'parent1\' created successfully", null)]
-        public async System.Threading.Tasks.Task CreateAUser(string username, string password, string role, string message, string[] exampleTags)
+        [NUnit.Framework.DescriptionAttribute("Create user")]
+        [NUnit.Framework.CategoryAttribute("Positive_flow")]
+        [NUnit.Framework.TestCaseAttribute("CREATING TEACHER", "brrrrrrs", "teacher11", "teacher", "teacher \'brrrrrrs\' created successfully", null)]
+        [NUnit.Framework.TestCaseAttribute("CREATING MODERATOR", "moderator", "moderator", "moderator", "moderator \'moderator\' created successfully", null)]
+        [NUnit.Framework.TestCaseAttribute("CREATING PARENT", "parent1", "parent1", "parent", "parent \'parent1\' created successfully", null)]
+        public async System.Threading.Tasks.Task CreateUser(string title, string username, string password, string role, string message, string[] exampleTags)
         {
-            string[] tagsOfScenario = exampleTags;
+            string[] @__tags = new string[] {
+                    "Positive_flow"};
+            if ((exampleTags != null))
+            {
+                @__tags = System.Linq.Enumerable.ToArray(System.Linq.Enumerable.Concat(@__tags, exampleTags));
+            }
+            string[] tagsOfScenario = @__tags;
             System.Collections.Specialized.OrderedDictionary argumentsOfScenario = new System.Collections.Specialized.OrderedDictionary();
+            argumentsOfScenario.Add("title", title);
             argumentsOfScenario.Add("username", username);
             argumentsOfScenario.Add("password", password);
             argumentsOfScenario.Add("role", role);
             argumentsOfScenario.Add("message", message);
-            global::Reqnroll.ScenarioInfo scenarioInfo = new global::Reqnroll.ScenarioInfo("Create a user", null, tagsOfScenario, argumentsOfScenario, featureTags);
-#line 11
-  this.ScenarioInitialize(scenarioInfo);
+            global::Reqnroll.ScenarioInfo scenarioInfo = new global::Reqnroll.ScenarioInfo("Create user", null, tagsOfScenario, argumentsOfScenario, featureTags);
+#line 12
+this.ScenarioInitialize(scenarioInfo);
 #line hidden
             if ((global::Reqnroll.TagHelper.ContainsIgnoreTag(scenarioInfo.CombinedTags) || global::Reqnroll.TagHelper.ContainsIgnoreTag(featureTags)))
             {
@@ -142,31 +150,40 @@ namespace BackEndAutomation.Tests.BBDTests.FeatureFiles
             {
                 await this.ScenarioStartAsync();
 #line 5
-  await this.FeatureBackgroundAsync();
-#line hidden
-#line 12
-    await testRunner.WhenAsync(string.Format("admin creates a user with \"{0}\" username, \"{1}\" password, and \"{2}\" role.", username, password, role), ((string)(null)), ((global::Reqnroll.Table)(null)), "When ");
+await this.FeatureBackgroundAsync();
 #line hidden
 #line 13
-    await testRunner.ThenAsync(string.Format("validate user is created \"{0}\".", message), ((string)(null)), ((global::Reqnroll.Table)(null)), "Then ");
+ await testRunner.WhenAsync(string.Format("admin creates a user with \"{0}\" username, \"{1}\" password, and \"{2}\" role.", username, password, role), ((string)(null)), ((global::Reqnroll.Table)(null)), "When ");
+#line hidden
+#line 14
+ await testRunner.ThenAsync(string.Format("validate user is created \"{0}\".", message), ((string)(null)), ((global::Reqnroll.Table)(null)), "Then ");
 #line hidden
             }
             await this.ScenarioCleanupAsync();
         }
         
         [NUnit.Framework.TestAttribute()]
-        [NUnit.Framework.DescriptionAttribute("Connect parent to student")]
-        [NUnit.Framework.TestCaseAttribute("parent1", "43bac5dc-ecba-4826-8b8d-204cecd07b18", "Parent linked to student", null)]
-        public async System.Threading.Tasks.Task ConnectParentToStudent(string parent_Username, string student_Id, string message, string[] exampleTags)
+        [NUnit.Framework.DescriptionAttribute("Try to create user that exists")]
+        [NUnit.Framework.CategoryAttribute("Negative_flow")]
+        [NUnit.Framework.TestCaseAttribute("CREATING TEACHER", "teacher11", "teacher11", "teacher", "Username already exists", null)]
+        public async System.Threading.Tasks.Task TryToCreateUserThatExists(string title, string username, string password, string role, string message, string[] exampleTags)
         {
-            string[] tagsOfScenario = exampleTags;
+            string[] @__tags = new string[] {
+                    "Negative_flow"};
+            if ((exampleTags != null))
+            {
+                @__tags = System.Linq.Enumerable.ToArray(System.Linq.Enumerable.Concat(@__tags, exampleTags));
+            }
+            string[] tagsOfScenario = @__tags;
             System.Collections.Specialized.OrderedDictionary argumentsOfScenario = new System.Collections.Specialized.OrderedDictionary();
-            argumentsOfScenario.Add("parent_username", parent_Username);
-            argumentsOfScenario.Add("student_id", student_Id);
+            argumentsOfScenario.Add("title", title);
+            argumentsOfScenario.Add("username", username);
+            argumentsOfScenario.Add("password", password);
+            argumentsOfScenario.Add("role", role);
             argumentsOfScenario.Add("message", message);
-            global::Reqnroll.ScenarioInfo scenarioInfo = new global::Reqnroll.ScenarioInfo("Connect parent to student", null, tagsOfScenario, argumentsOfScenario, featureTags);
-#line 21
-  this.ScenarioInitialize(scenarioInfo);
+            global::Reqnroll.ScenarioInfo scenarioInfo = new global::Reqnroll.ScenarioInfo("Try to create user that exists", null, tagsOfScenario, argumentsOfScenario, featureTags);
+#line 23
+this.ScenarioInitialize(scenarioInfo);
 #line hidden
             if ((global::Reqnroll.TagHelper.ContainsIgnoreTag(scenarioInfo.CombinedTags) || global::Reqnroll.TagHelper.ContainsIgnoreTag(featureTags)))
             {
@@ -176,13 +193,55 @@ namespace BackEndAutomation.Tests.BBDTests.FeatureFiles
             {
                 await this.ScenarioStartAsync();
 #line 5
-  await this.FeatureBackgroundAsync();
+await this.FeatureBackgroundAsync();
 #line hidden
-#line 22
-    await testRunner.WhenAsync(string.Format("admin connect parent \"{0}\" to student with id: \"{1}\".", parent_Username, student_Id), ((string)(null)), ((global::Reqnroll.Table)(null)), "When ");
+#line 24
+ await testRunner.WhenAsync(string.Format("admin try to create existing user with \"{0}\" username, \"{1}\" password, and \"{2}\" " +
+                            "role.", username, password, role), ((string)(null)), ((global::Reqnroll.Table)(null)), "When ");
 #line hidden
-#line 23
-    await testRunner.ThenAsync(string.Format("validate parent is connected to student \"{0}\".", message), ((string)(null)), ((global::Reqnroll.Table)(null)), "Then ");
+#line 25
+ await testRunner.ThenAsync(string.Format("validate user is already created \"{0}\".", message), ((string)(null)), ((global::Reqnroll.Table)(null)), "Then ");
+#line hidden
+            }
+            await this.ScenarioCleanupAsync();
+        }
+        
+        [NUnit.Framework.TestAttribute()]
+        [NUnit.Framework.DescriptionAttribute("Connecting parent to student")]
+        [NUnit.Framework.CategoryAttribute("Positive_flow")]
+        [NUnit.Framework.TestCaseAttribute("parent1", "43bac5dc-ecba-4826-8b8d-204cecd07b18", "Parent linked to student", null)]
+        public async System.Threading.Tasks.Task ConnectingParentToStudent(string parent_Username, string student_Id, string message, string[] exampleTags)
+        {
+            string[] @__tags = new string[] {
+                    "Positive_flow"};
+            if ((exampleTags != null))
+            {
+                @__tags = System.Linq.Enumerable.ToArray(System.Linq.Enumerable.Concat(@__tags, exampleTags));
+            }
+            string[] tagsOfScenario = @__tags;
+            System.Collections.Specialized.OrderedDictionary argumentsOfScenario = new System.Collections.Specialized.OrderedDictionary();
+            argumentsOfScenario.Add("parent_username", parent_Username);
+            argumentsOfScenario.Add("student_id", student_Id);
+            argumentsOfScenario.Add("message", message);
+            global::Reqnroll.ScenarioInfo scenarioInfo = new global::Reqnroll.ScenarioInfo("Connecting parent to student", null, tagsOfScenario, argumentsOfScenario, featureTags);
+#line 32
+this.ScenarioInitialize(scenarioInfo);
+#line hidden
+            if ((global::Reqnroll.TagHelper.ContainsIgnoreTag(scenarioInfo.CombinedTags) || global::Reqnroll.TagHelper.ContainsIgnoreTag(featureTags)))
+            {
+                testRunner.SkipScenario();
+            }
+            else
+            {
+                await this.ScenarioStartAsync();
+#line 5
+await this.FeatureBackgroundAsync();
+#line hidden
+#line 33
+ await testRunner.WhenAsync(string.Format("admin connect parent \"{0}\" to student with id: \"{1}\".", parent_Username, student_Id), ((string)(null)), ((global::Reqnroll.Table)(null)), "When ");
+#line hidden
+#line 34
+ await testRunner.ThenAsync(string.Format("validate parent is connected to student \"{0}\".", message), ((string)(null)), ((global::Reqnroll.Table)(null)), "Then ");
 #line hidden
             }
             await this.ScenarioCleanupAsync();

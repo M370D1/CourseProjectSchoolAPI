@@ -28,7 +28,7 @@ namespace BackEndAutomation.Tests.BBDTests.FeatureFiles
         
         private static string[] featureTags = ((string[])(null));
         
-        private static global::Reqnroll.FeatureInfo featureInfo = new global::Reqnroll.FeatureInfo(new System.Globalization.CultureInfo("en-US"), "Tests/BBDTests/Feature files", "Parent", "  Parent authentication student grades view.", global::Reqnroll.ProgrammingLanguage.CSharp, featureTags);
+        private static global::Reqnroll.FeatureInfo featureInfo = new global::Reqnroll.FeatureInfo(new System.Globalization.CultureInfo("en-US"), "Tests/BBDTests/Feature files", "Parent", "  Parent authentication and student grades view.", global::Reqnroll.ProgrammingLanguage.CSharp, featureTags);
         
 #line 1 "Parent.feature"
 #line hidden
@@ -88,9 +88,6 @@ namespace BackEndAutomation.Tests.BBDTests.FeatureFiles
 #line 6
  await testRunner.GivenAsync("user signs in with \"parent1\" username and \"parent1\" password.", ((string)(null)), ((global::Reqnroll.Table)(null)), "Given ");
 #line hidden
-#line 7
- await testRunner.ThenAsync("validate parent is connected to student \"<message>\".", ((string)(null)), ((global::Reqnroll.Table)(null)), "Then ");
-#line hidden
         }
         
         [NUnit.Framework.TestAttribute()]
@@ -100,7 +97,7 @@ namespace BackEndAutomation.Tests.BBDTests.FeatureFiles
             string[] tagsOfScenario = ((string[])(null));
             System.Collections.Specialized.OrderedDictionary argumentsOfScenario = new System.Collections.Specialized.OrderedDictionary();
             global::Reqnroll.ScenarioInfo scenarioInfo = new global::Reqnroll.ScenarioInfo("Sign in and receive a token", null, tagsOfScenario, argumentsOfScenario, featureTags);
-#line 9
+#line 8
 this.ScenarioInitialize(scenarioInfo);
 #line hidden
             if ((global::Reqnroll.TagHelper.ContainsIgnoreTag(scenarioInfo.CombinedTags) || global::Reqnroll.TagHelper.ContainsIgnoreTag(featureTags)))
@@ -113,7 +110,7 @@ this.ScenarioInitialize(scenarioInfo);
 #line 5
 await this.FeatureBackgroundAsync();
 #line hidden
-#line 10
+#line 9
  await testRunner.ThenAsync("validate that the user is signed in.", ((string)(null)), ((global::Reqnroll.Table)(null)), "Then ");
 #line hidden
             }
@@ -121,12 +118,21 @@ await this.FeatureBackgroundAsync();
         }
         
         [NUnit.Framework.TestAttribute()]
-        [NUnit.Framework.DescriptionAttribute("View grades")]
-        public async System.Threading.Tasks.Task ViewGrades()
+        [NUnit.Framework.DescriptionAttribute("View student grades")]
+        [NUnit.Framework.CategoryAttribute("Positive_flow")]
+        [NUnit.Framework.TestCaseAttribute("43bac5dc-ecba-4826-8b8d-204cecd07b18", null)]
+        public async System.Threading.Tasks.Task ViewStudentGrades(string student_Id, string[] exampleTags)
         {
-            string[] tagsOfScenario = ((string[])(null));
+            string[] @__tags = new string[] {
+                    "Positive_flow"};
+            if ((exampleTags != null))
+            {
+                @__tags = System.Linq.Enumerable.ToArray(System.Linq.Enumerable.Concat(@__tags, exampleTags));
+            }
+            string[] tagsOfScenario = @__tags;
             System.Collections.Specialized.OrderedDictionary argumentsOfScenario = new System.Collections.Specialized.OrderedDictionary();
-            global::Reqnroll.ScenarioInfo scenarioInfo = new global::Reqnroll.ScenarioInfo("View grades", null, tagsOfScenario, argumentsOfScenario, featureTags);
+            argumentsOfScenario.Add("student_id", student_Id);
+            global::Reqnroll.ScenarioInfo scenarioInfo = new global::Reqnroll.ScenarioInfo("View student grades", null, tagsOfScenario, argumentsOfScenario, featureTags);
 #line 12
 this.ScenarioInitialize(scenarioInfo);
 #line hidden
@@ -141,10 +147,90 @@ this.ScenarioInitialize(scenarioInfo);
 await this.FeatureBackgroundAsync();
 #line hidden
 #line 13
- await testRunner.WhenAsync("parent view grades of student with id: \"<student_id>\".", ((string)(null)), ((global::Reqnroll.Table)(null)), "When ");
+ await testRunner.WhenAsync(string.Format("parent view grades of student with id: \"{0}\".", student_Id), ((string)(null)), ((global::Reqnroll.Table)(null)), "When ");
 #line hidden
 #line 14
- await testRunner.ThenAsync("validate grads are visible.", ((string)(null)), ((global::Reqnroll.Table)(null)), "Then ");
+ await testRunner.ThenAsync("validate grades are visible.", ((string)(null)), ((global::Reqnroll.Table)(null)), "Then ");
+#line hidden
+            }
+            await this.ScenarioCleanupAsync();
+        }
+        
+        [NUnit.Framework.TestAttribute()]
+        [NUnit.Framework.DescriptionAttribute("Try to view student grades with invalid id")]
+        [NUnit.Framework.CategoryAttribute("Positive_flow")]
+        [NUnit.Framework.TestCaseAttribute("invalid-student-id", "Student not found", null)]
+        public async System.Threading.Tasks.Task TryToViewStudentGradesWithInvalidId(string student_Id, string message, string[] exampleTags)
+        {
+            string[] @__tags = new string[] {
+                    "Positive_flow"};
+            if ((exampleTags != null))
+            {
+                @__tags = System.Linq.Enumerable.ToArray(System.Linq.Enumerable.Concat(@__tags, exampleTags));
+            }
+            string[] tagsOfScenario = @__tags;
+            System.Collections.Specialized.OrderedDictionary argumentsOfScenario = new System.Collections.Specialized.OrderedDictionary();
+            argumentsOfScenario.Add("student_id", student_Id);
+            argumentsOfScenario.Add("message", message);
+            global::Reqnroll.ScenarioInfo scenarioInfo = new global::Reqnroll.ScenarioInfo("Try to view student grades with invalid id", null, tagsOfScenario, argumentsOfScenario, featureTags);
+#line 21
+this.ScenarioInitialize(scenarioInfo);
+#line hidden
+            if ((global::Reqnroll.TagHelper.ContainsIgnoreTag(scenarioInfo.CombinedTags) || global::Reqnroll.TagHelper.ContainsIgnoreTag(featureTags)))
+            {
+                testRunner.SkipScenario();
+            }
+            else
+            {
+                await this.ScenarioStartAsync();
+#line 5
+await this.FeatureBackgroundAsync();
+#line hidden
+#line 22
+ await testRunner.WhenAsync(string.Format("parent view grades of student with id: \"{0}\".", student_Id), ((string)(null)), ((global::Reqnroll.Table)(null)), "When ");
+#line hidden
+#line 23
+ await testRunner.ThenAsync(string.Format("validate student id is invalid \"{0}\".", message), ((string)(null)), ((global::Reqnroll.Table)(null)), "Then ");
+#line hidden
+            }
+            await this.ScenarioCleanupAsync();
+        }
+        
+        [NUnit.Framework.TestAttribute()]
+        [NUnit.Framework.DescriptionAttribute("Try to view student grades, who isn\'t connected to parent")]
+        [NUnit.Framework.CategoryAttribute("Negative_flow")]
+        [NUnit.Framework.TestCaseAttribute("5b238374-36b6-477b-9ff0-9333a0b194b1", "You can\'t view this student\'s grades", null)]
+        public async System.Threading.Tasks.Task TryToViewStudentGradesWhoIsntConnectedToParent(string student_Id, string message, string[] exampleTags)
+        {
+            string[] @__tags = new string[] {
+                    "Negative_flow"};
+            if ((exampleTags != null))
+            {
+                @__tags = System.Linq.Enumerable.ToArray(System.Linq.Enumerable.Concat(@__tags, exampleTags));
+            }
+            string[] tagsOfScenario = @__tags;
+            System.Collections.Specialized.OrderedDictionary argumentsOfScenario = new System.Collections.Specialized.OrderedDictionary();
+            argumentsOfScenario.Add("student_id", student_Id);
+            argumentsOfScenario.Add("message", message);
+            global::Reqnroll.ScenarioInfo scenarioInfo = new global::Reqnroll.ScenarioInfo("Try to view student grades, who isn\'t connected to parent", null, tagsOfScenario, argumentsOfScenario, featureTags);
+#line 30
+this.ScenarioInitialize(scenarioInfo);
+#line hidden
+            if ((global::Reqnroll.TagHelper.ContainsIgnoreTag(scenarioInfo.CombinedTags) || global::Reqnroll.TagHelper.ContainsIgnoreTag(featureTags)))
+            {
+                testRunner.SkipScenario();
+            }
+            else
+            {
+                await this.ScenarioStartAsync();
+#line 5
+await this.FeatureBackgroundAsync();
+#line hidden
+#line 31
+ await testRunner.WhenAsync(string.Format("parent view grades of student with id: \"{0}\".", student_Id), ((string)(null)), ((global::Reqnroll.Table)(null)), "When ");
+#line hidden
+#line 32
+ await testRunner.ThenAsync(string.Format("validate student is not linked to parent \"{0}\".", message), ((string)(null)), ((global::Reqnroll.Table)(null)), "Then ");
 #line hidden
             }
             await this.ScenarioCleanupAsync();

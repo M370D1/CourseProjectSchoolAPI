@@ -30,8 +30,8 @@ namespace BackEndAutomation
 
             string token = _scenarioContext.Get<string>(ContextKeys.UserTokenKey);
             RestResponse response = _restCalls.CraeteClassCall(classname, subject_1, subject_2, subject_3, token);
-            string message = _extractResponseData.ExtractMessage(response.Content);
-            string classID = _extractResponseData.ExtractClassID(response.Content);
+            string message = _extractResponseData.Extractor(response.Content, JsonIdentifierKeys.MessageKey);
+            string classID = _extractResponseData.Extractor(response.Content, JsonIdentifierKeys.ClassIdKey);
             _scenarioContext.Add(ContextKeys.MessageKey, message);
             _scenarioContext.Add(ContextKeys.ClassIdKey, classID);
             _scenarioContext.Add(ContextKeys.ClassNameKey, classname);

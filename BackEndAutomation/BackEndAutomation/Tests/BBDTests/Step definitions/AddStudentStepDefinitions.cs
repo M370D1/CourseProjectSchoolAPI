@@ -30,12 +30,13 @@ namespace BackEndAutomation
             _test.Info($"Adding student with name: {studentName} and class id {class_id}");
 
             string token = _scenarioContext.Get<string>(ContextKeys.UserTokenKey);
-            RestResponse response = _restCalls.AddStudentCall(studentName, class_id,token);
-            string message = _extractResponseData.ExtractMessage(response.Content);
-            string studentID = _extractResponseData.ExtractStudentID(response.Content);
+            RestResponse response = _restCalls.AddStudentCall(studentName, class_id, token);
+            string message = _extractResponseData.Extractor(response.Content, JsonIdentifierKeys.MessageKey);
+            string studentID = _extractResponseData.Extractor(response.Content, JsonIdentifierKeys.StudentIdKey);
             _scenarioContext.Add(ContextKeys.MessageKey, message);
             _scenarioContext.Add(ContextKeys.StudentNameKey, studentName);
             _scenarioContext.Add(ContextKeys.StudentIdKey, studentID);
+            _scenarioContext.Add(ContextKeys.ClassIdKey, class_id);
 
             Console.WriteLine(response.Content);
             _test.Pass($"{studentName} with {studentID} added successfully to class with class id: {class_id}. Response message: {message}");
@@ -61,7 +62,24 @@ namespace BackEndAutomation
                 $"Adding {studentName} failed.",
                 _scenarioContext);
 
-            _test.Pass($"Adding{studentName} validation passed. Student {studentName} is added to class with id {class_id}.");
+            _test.Pass($"Adding {studentName} validation passed. Student {studentName} is added to class with id {class_id}.");
         }
+
+        [Then("validate that student is not added {string}.")]
+        public void ValidateStudentIsNotAdded_(string expectedMessage)
+        {
+            string actualMessage = _scenarioContext.Get<string>(ContextKeys.MessageKey);
+            string class_id = _scenarioContext.Get<string>(ContextKeys.ClassIdKey);
+            string studentName = _scenarioContext.Get<string>(ContextKeys.StudentNameKey);
+
+            Utilities.UtilitiesMethods.AssertEqual(
+                expectedMessage,
+                actualMessage,
+                $"Validating {studentName} is not added - failed.",
+                _scenarioContext);
+
+            _test.Pass($"Student {studentName} is not added to class with id {class_id}.");
+        }
+
     }
 }
