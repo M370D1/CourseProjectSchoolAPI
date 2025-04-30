@@ -15,25 +15,26 @@ Handles errors gracefully with meaningful feedback in the report and logs
 📋 Functionalities Covered
 The test suite covers at least 5 core functionalities of the School API, such as:
 
-1. User sign-in
-2. User creation
-3. Assigning grades to students
-4. Updating student grades
-5. Viewing student grades by parents
+1. Login and token retrieval
+2. Creating a class by a teacher
+3. Adding a student to a class
+4. Adding a grade to a student
+5. Parent views their child's grades
 
-   Tests list:
-   1. Create user
-   2. Sign in and receive a token
-   3. Try to create user that exists
-   4. Connecting parent to student
-   5. View student grades
-   6. Try to view student grades with invalid id
-   7. Try to view student grades, who isn't connected to parent
-   8. Create a class
-   9. Add stuednt to class
-   10. Try to add stuednt to class with invalid class id
-   11. Add and update grade
-   12. Try to add grade to student with invalid id
+Tests list:
+
+1. Create user
+2. Sign in and receive a token
+3. Try to create user that exists
+4. Connecting parent to student
+5. View student grades
+6. Try to view student grades with invalid id
+7. Try to view student grades, who isn't connected to parent
+8. Create a class
+9. Add stuednt to class
+10. Try to add stuednt to class with invalid class id
+11. Add and update grade
+12. Try to add grade to student with invalid id
 
 🛠️ Tech Stack
 .NET 6 / .NET Core
