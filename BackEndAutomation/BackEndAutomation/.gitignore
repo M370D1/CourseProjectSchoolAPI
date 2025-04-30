@@ -1,0 +1,69 @@
+﻿# Build results
+bin/
+obj/
+out/
+
+# User-specific files
+*.user
+*.suo
+*.userosscache
+*.sln.docstates
+
+# VS Code
+.vscode/
+.vs/
+
+# Visual Studio
+.vs/
+
+# Test results
+TestResults/
+*.trx
+*.coverage
+*.coveragexml
+
+# NuGet
+*.nupkg
+*.snupkg
+packages/
+*.nuget.props
+*.nuget.targets
+
+# Logs
+*.log
+Logs/
+log/
+logs/
+
+# Temporary files
+*.tmp
+*.temp
+*.bak
+*.swp
+
+# Report files
+Reports/
+*.html
+*.xml
+*.json
+
+# IDE-specific files
+.idea/
+*.iml
+
+# Environment config
+.env
+.env.*
+
+# SpecFlow/Reqnroll generated files
+*.feature.cs
+
+# JetBrains Rider
+.idea/
+
+# ReSharper
+_ReSharper*/
+*.[Rr]e[Ss]harper
+
+# Backup files
+*.bak

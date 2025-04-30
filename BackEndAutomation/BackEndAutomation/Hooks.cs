@@ -19,35 +19,6 @@ namespace BackEndAutomation
             ExtentManager.InitReport();
         }
 
-        //[BeforeScenario("UI")]
-        //public void BeforeUIScenario()
-        //{
-        //    var options = new ChromeOptions();
-        //    options.AddArgument("--start-maximized"); // Отваряне на цял екран
-        //    options.AddArgument("--disable-notifications"); // Деактивиране на изскачащи нотификации
-
-        //    _driver = new ChromeDriver(options);
-
-        //    // Запазване на WebDriver в контекста на сценариите
-        //    _scenarioContext["WebDriver"] = _driver;
-        //}
-
-        //[AfterScenario("UI")]
-        //public void AfterUIScenario()
-        //{
-        //    if (_scenarioContext.ContainsKey("WebDriver"))
-        //    {
-        //        _driver = (IWebDriver)_scenarioContext["WebDriver"];
-
-        //        if (_scenarioContext.TestError != null) // Ако има грешка в теста
-        //        {
-        //            TakeScreenshot(_scenarioContext.ScenarioInfo.Title);
-        //        }
-
-        //        _driver.Quit();
-        //    }
-        //}
-
         [BeforeScenario]
         public void BeforeScenario()
         {
@@ -93,29 +64,5 @@ namespace BackEndAutomation
 
             return scenarioName;
         }
-
-        //private void TakeScreenshot(string scenarioName)
-        //{
-        //    try
-        //    {
-        //        ITakesScreenshot screenshotDriver = _driver as ITakesScreenshot;
-        //        Screenshot screenshot = screenshotDriver.GetScreenshot();
-
-        //        string screenshotsDirectory = Path.Combine(Directory.GetCurrentDirectory(), "Screenshots");
-        //        if (!Directory.Exists(screenshotsDirectory))
-        //        {
-        //            Directory.CreateDirectory(screenshotsDirectory);
-        //        }
-
-        //        string filePath = Path.Combine(screenshotsDirectory, $"{scenarioName}_{DateTime.Now:yyyyMMdd_HHmmss}.png");
-        //        screenshot.SaveAsFile(filePath);
-
-        //        Console.WriteLine($"Screenshot saved: {filePath}");
-        //    }
-        //    catch (Exception ex)
-        //    {
-        //        Console.WriteLine($"Failed to take screenshot: {ex.Message}");
-        //    }
-        //}
     }
 }
