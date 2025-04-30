@@ -7,13 +7,13 @@ The goal of this project is to test the School API’s key functionalities using
 ✅ Key Features
 Written in C# using BDD (Behavior Driven Development)
 Uses RestSharp for API calls
-Integrated with SpecFlow/Reqnroll for Gherkin-style step definitions
+Integrated with Reqnroll for Gherkin-style step definitions
 Includes logging for all test steps
 Generates HTML test reports with clear human-readable messages
 Handles errors gracefully with meaningful feedback in the report and logs
 
-📋 Functionalities Covered
-The test suite covers at least 5 core functionalities of the School API, such as:
+📋 Functionalities Covered:
+The test suite covers 5 core functionalities of the School API, such as:
 
 1. Login and token retrieval
 2. Creating a class by a teacher
@@ -39,10 +39,10 @@ Tests list:
 🛠️ Tech Stack
 .NET 6 / .NET Core
 C#
-SpecFlow or Reqnroll (for BDD)
+Reqnroll (for BDD)
 RestSharp (for HTTP requests)
 Extent Reports (for HTML reporting)
-Log4Net / NLog (for logging)
+NLog (for logging)
 NUnit (as the test runner)
 
 🧰 Installation
