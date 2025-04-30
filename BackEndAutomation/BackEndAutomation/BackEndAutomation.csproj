@@ -8,6 +8,10 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <None Include=".github\workflows\ci.yml" />
+  </ItemGroup>
+
+  <ItemGroup>
 	<PackageReference Include="DotNetSeleniumExtras.WaitHelpers" Version="3.11.0" />
 	<PackageReference Include="ExtentReports" Version="5.0.4" />
 	<PackageReference Include="FluentAssertions" Version="8.2.0" />
