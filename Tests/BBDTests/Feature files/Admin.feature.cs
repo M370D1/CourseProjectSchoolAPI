@@ -120,10 +120,10 @@ await this.FeatureBackgroundAsync();
         [NUnit.Framework.TestAttribute()]
         [NUnit.Framework.DescriptionAttribute("Create user")]
         [NUnit.Framework.CategoryAttribute("Positive_flow")]
-        [NUnit.Framework.TestCaseAttribute("CREATING TEACHER", "brrrrrrs", "teacher11", "teacher", "teacher \'brrrrrrs\' created successfully", null)]
-        [NUnit.Framework.TestCaseAttribute("CREATING MODERATOR", "moderator", "moderator", "moderator", "moderator \'moderator\' created successfully", null)]
-        [NUnit.Framework.TestCaseAttribute("CREATING PARENT", "parent1", "parent1", "parent", "parent \'parent1\' created successfully", null)]
-        public async System.Threading.Tasks.Task CreateUser(string title, string username, string password, string role, string message, string[] exampleTags)
+        [NUnit.Framework.TestCaseAttribute("CREATING TEACHER", "brrrrrrs", "teacher11", "teacher", null)]
+        [NUnit.Framework.TestCaseAttribute("CREATING MODERATOR", "moderator", "moderator", "moderator", null)]
+        [NUnit.Framework.TestCaseAttribute("CREATING PARENT", "parent1", "parent1", "parent", null)]
+        public async System.Threading.Tasks.Task CreateUser(string title, string username, string password, string role, string[] exampleTags)
         {
             string[] @__tags = new string[] {
                     "Positive_flow"};
@@ -137,7 +137,6 @@ await this.FeatureBackgroundAsync();
             argumentsOfScenario.Add("username", username);
             argumentsOfScenario.Add("password", password);
             argumentsOfScenario.Add("role", role);
-            argumentsOfScenario.Add("message", message);
             global::Reqnroll.ScenarioInfo scenarioInfo = new global::Reqnroll.ScenarioInfo("Create user", null, tagsOfScenario, argumentsOfScenario, featureTags);
 #line 12
 this.ScenarioInitialize(scenarioInfo);
@@ -156,7 +155,7 @@ await this.FeatureBackgroundAsync();
  await testRunner.WhenAsync(string.Format("admin creates a user with \"{0}\" username, \"{1}\" password, and \"{2}\" role.", username, password, role), ((string)(null)), ((global::Reqnroll.Table)(null)), "When ");
 #line hidden
 #line 14
- await testRunner.ThenAsync(string.Format("validate user is created \"{0}\".", message), ((string)(null)), ((global::Reqnroll.Table)(null)), "Then ");
+ await testRunner.ThenAsync("validate user is created.", ((string)(null)), ((global::Reqnroll.Table)(null)), "Then ");
 #line hidden
             }
             await this.ScenarioCleanupAsync();

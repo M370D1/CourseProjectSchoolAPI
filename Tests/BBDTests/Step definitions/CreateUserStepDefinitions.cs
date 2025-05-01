@@ -27,6 +27,9 @@ namespace BackEndAutomation
         [When("admin creates a user with {string} username, {string} password, and {string} role.")]
         public void AdminCreateUser_(string username, string password, string role)
         {
+            var timestamp = DateTime.Now.ToString("yyyyMMdd_HHmmss");
+            username = $"{username}_{timestamp}";
+
             _test.Info($"Creating user with username: {username}, role: {role}");
 
             string token = _scenarioContext.Get<string>(ContextKeys.UserTokenKey);
@@ -34,16 +37,19 @@ namespace BackEndAutomation
             string message = _extractResponseData.Extractor(response.Content, JsonIdentifierKeys.MessageKey);
             _scenarioContext.Add(ContextKeys.MessageKey, message);
             _scenarioContext.Add(ContextKeys.RoleKey, role);
+            _scenarioContext[ContextKeys.UserNameKey] = username;
 
             Console.WriteLine(response.Content);
             _test.Pass($"{username} {response.Content}");
         }
 
-        [Then("validate user is created {string}.")]
-        public void ValidateUserIsCreated_(string expectedMessage)
+        [Then("validate user is created.")]
+        public void ValidateUserIsCreated_()
         {
             string role = _scenarioContext.Get<string>(ContextKeys.RoleKey);
             string actualMessage = _scenarioContext.Get<string>(ContextKeys.MessageKey);
+            string username = _scenarioContext.Get<string>(ContextKeys.UserNameKey);
+            string expectedMessage = $"{role} '{username}' created successfully";
 
             Utilities.UtilitiesMethods.AssertEqual(
                 expectedMessage,

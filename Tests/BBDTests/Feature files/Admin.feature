@@ -11,13 +11,13 @@ Scenario: Sign in and receive a token
 @Positive_flow
 Scenario Outline: Create user
 	When admin creates a user with "<username>" username, "<password>" password, and "<role>" role.
-	Then validate user is created "<message>".
+	Then validate user is created.
 
 Examples:
-	| title              | username  | password  | role      | message                                    |
-	| CREATING TEACHER   | brrrrrrs  | teacher11 | teacher   | teacher 'brrrrrrs' created successfully   |
-	| CREATING MODERATOR | moderator | moderator | moderator | moderator 'moderator' created successfully |
-	| CREATING PARENT    | parent1   | parent1   | parent    | parent 'parent1' created successfully      |
+	| title              | username  | password  | role      | 
+	| CREATING TEACHER   | brrrrrrs  | teacher11 | teacher   | 
+	| CREATING MODERATOR | moderator | moderator | moderator | 
+	| CREATING PARENT    | parent1   | parent1   | parent    | 
 
 @Negative_flow
 Scenario Outline: Try to create user that exists
