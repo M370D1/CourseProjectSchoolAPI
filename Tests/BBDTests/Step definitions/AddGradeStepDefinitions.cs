@@ -27,7 +27,7 @@ namespace BackEndAutomation
         [When("teacher add grade: {string}, to student: {string}, in subject: {string}.")]
         public void TeacherAddGrade_(int grade, string student_id, string subject)
         {
-            _test.Info($"Adding grade: {grade}, to student with id: {student_id}, in subject: {subject}.");
+            _test.Info($"Initiating request to assign grade '{grade}' to student ID '{student_id}' for subject '{subject}'.");
 
             string token = _scenarioContext.Get<string>(ContextKeys.UserTokenKey);
             RestResponse response = _restCalls.AddGradeCall(grade, student_id, subject, token);
@@ -38,7 +38,7 @@ namespace BackEndAutomation
             _scenarioContext.Add(ContextKeys.GradeKey, grade);
 
             Console.WriteLine(response.Content);
-            _test.Pass($"{grade} added successfully to {student_id} in {subject}. Response message: {message}");
+            _test.Pass($"Successfully assigned grade '{grade}' to student ID '{student_id}' in subject '{subject}'. API response: \"{message}\".");
         }
 
         [Then("validate that grade is added to student {string}.")]
@@ -52,10 +52,10 @@ namespace BackEndAutomation
             Utilities.UtilitiesMethods.AssertEqual(
                 expectedMessage,
                 actualMessage,
-                $"Adding grade: {grade}, to student id: {student_id}, in subject: {subject} - failed.",
+                $"Validation failed: Expected message does not match actual after assigning grade '{grade}' to student ID '{student_id}' for subject '{subject}'.",
                 _scenarioContext);
 
-            _test.Pass($"Validation passed, grade {grade} is added to student id: {student_id}, in subject: {subject}.");
+            _test.Pass($"Validation successful: Grade '{grade}' has been correctly added to student ID '{student_id}' for subject '{subject}'.");
         }
     }
 }

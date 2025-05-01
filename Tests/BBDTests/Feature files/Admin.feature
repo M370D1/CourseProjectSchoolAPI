@@ -11,7 +11,7 @@ Scenario: Sign in and receive a token
 @Positive_flow
 Scenario Outline: Create user
 	When admin creates a user with "<username>" username, "<password>" password, and "<role>" role.
-	Then validate user is created.
+	Then validate user is created. "created successfully" 
 
 Examples:
 	| title              | username  | password  | role      | 

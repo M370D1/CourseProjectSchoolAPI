@@ -30,7 +30,8 @@ namespace BackEndAutomation
             int grade = _scenarioContext.Get<int>(ContextKeys.GradeKey);
             string student_id = _scenarioContext.Get<string>(ContextKeys.StudentIdKey);
             string subject = _scenarioContext.Get<string> (ContextKeys.SubjectKey);
-            _test.Info($"Updating grade: {grade}, to student with id: {student_id}, in subject: {subject}, with grade: {newGrade}.");
+
+            _test.Info($"Updating grade from {grade} to {newGrade} for student ID: {student_id} in subject: {subject}.");
 
             string token = _scenarioContext.Get<string>(ContextKeys.UserTokenKey);
             RestResponse response = _restCalls.AddGradeCall(newGrade, student_id, subject, token);
@@ -39,7 +40,7 @@ namespace BackEndAutomation
             _scenarioContext.Add(ContextKeys.NewGradeKey, newGrade);
 
             Console.WriteLine(response.Content);
-            _test.Pass($"Grade: {grade}, updated successfully to student with id: {student_id}, in subject: {subject} with grade: {newGrade}. Response message: {message}");
+            _test.Pass($"Successfully updated grade from {grade} to {newGrade} for student ID: {student_id} in subject: {subject}. Response message: {message}.");
         }
 
         [Then("validate that grade is updated {string}.")]
@@ -54,10 +55,10 @@ namespace BackEndAutomation
             Utilities.UtilitiesMethods.AssertEqual(
                 expectedMessage,
                 actualMessage,
-                $"TEST FAILED AT: Updating grade: {grade}, to student with id: {student_id}, in subject: {subject}, with grade: {newGrade}.",
+                $"Grade update failed: Expected message did not match actual when updating grade from {grade} to {newGrade} for student ID: {student_id} in subject: {subject}.",
                 _scenarioContext);
 
-            _test.Pass($"VALIDATION TEST PASSED: Grade {grade} is updated to student id: {student_id}, in subject: {subject}, with grade: {newGrade}.");
+            _test.Pass($"Validation passed: Grade successfully updated from {grade} to {newGrade} for student ID: {student_id} in subject: {subject}.");
         }
     }
 }

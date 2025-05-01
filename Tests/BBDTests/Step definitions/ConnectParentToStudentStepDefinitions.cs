@@ -26,7 +26,7 @@ namespace BackEndAutomation
         [When("admin connect parent {string} to student with id: {string}.")]
         public void AdminConnectParentToStudent_(string parent_username, string student_id)
         {
-            _test.Info($"Connecting parent {parent_username}, to student with id: {student_id}.");
+            _test.Info($"Initiating request to link parent '{parent_username}' with student ID '{student_id}'.");
             string token = _scenarioContext.Get<string>(ContextKeys.UserTokenKey);
             RestResponse response = _restCalls.ConnectParentCall(parent_username, student_id, token);
             string message = _extractResponseData.Extractor(response.Content, JsonIdentifierKeys.MessageKey);
@@ -35,7 +35,7 @@ namespace BackEndAutomation
             _scenarioContext.Add(ContextKeys.StudentIdKey, student_id);
 
             Console.WriteLine(response.Content);
-            _test.Pass($"Parent {parent_username} connected successfully to student with id: {student_id}. Response message: {message}");
+            _test.Pass($"API call successful: Parent '{parent_username}' has been linked to student ID '{student_id}'. Response message: \"{message}\".");
         }
 
         [Then("validate parent is connected to student {string}.")]
@@ -48,10 +48,10 @@ namespace BackEndAutomation
             Utilities.UtilitiesMethods.AssertEqual(
                 expectedMessage,
                 actualMessage,
-                $"TEST FAILED AT: Connecting parent {parent_username} to student with id: {student_id}.",
+                 $"Validation failed: Expected message does not match after connecting parent '{parent_username}' to student ID '{student_id}'.",
                 _scenarioContext);
 
-            _test.Pass($"VALIDATION TEST PASSED: Parent {parent_username} is connected to student with id: {student_id}.");
+            _test.Pass($"Validation successful: Parent '{parent_username}' is now connected to student ID '{student_id}'.");
         }
     }
 }

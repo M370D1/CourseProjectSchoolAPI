@@ -27,7 +27,8 @@ public class RestCalls
         request.AddParameter("password", password);
 
         RestResponse response = _client.Execute(request);
-        Console.WriteLine($"SignIn Response: {response.Content}");
+        Console.WriteLine($"SignIn Response for user '{username}': {response.Content}");
+
         return HandleResponse(response);
     }
 
@@ -41,7 +42,7 @@ public class RestCalls
         request.AddQueryParameter("role", role);
 
         RestResponse response = _client.Execute(request);
-        Console.WriteLine($"CreateUser {role} Response: {response.Content}");
+        Console.WriteLine($"CreateUser Response for role '{role}', username '{username}': {response.Content}");
 
         if (JObject.Parse(response.Content).ContainsKey(JsonIdentifierKeys.DetailKey))
         {
@@ -63,7 +64,7 @@ public class RestCalls
         request.AddQueryParameter("subject_3", subject_3);
 
         RestResponse response = _client.Execute(request);
-        Console.WriteLine($"CreateClass {classname} Response: {response.Content}");
+        Console.WriteLine($"CreateClass Response for classname '{classname}' with subjects '{subject_1}, {subject_2}, {subject_3}': {response.Content}");
 
         return HandleResponse(response);
     }
@@ -77,7 +78,7 @@ public class RestCalls
         request.AddQueryParameter("class_id", class_id);
 
         RestResponse response = _client.Execute(request);
-        Console.WriteLine($"AddStudent {studentName} Response: {response.Content}");
+        Console.WriteLine($"AddStudent Response: Adding student '{studentName}' to class ID '{class_id}': {response.Content}");
 
         return HandleResponse(response);
     }
@@ -92,7 +93,7 @@ public class RestCalls
         request.AddQueryParameter("subject", subject);
 
         RestResponse response = _client.Execute(request);
-        Console.WriteLine($"AddGrade {grade} to {student_id} in {subject}. Response: {response.Content}");
+        Console.WriteLine($"AddGrade Response: Updating grade to '{grade}' for student ID '{student_id}' in subject '{subject}': {response.Content}");
 
         return HandleResponse(response);
     }
@@ -106,7 +107,7 @@ public class RestCalls
         request.AddQueryParameter("student_id", student_id);
 
         RestResponse response = _client.Execute(request);
-        Console.WriteLine($"Connect {parent_username} to student with id: {student_id}. Response: {response.Content}");
+        Console.WriteLine($"ConnectParent Response: Linking parent '{parent_username}' to student ID '{student_id}': {response.Content}");
 
         return HandleResponse(response);
     }
@@ -117,7 +118,7 @@ public class RestCalls
         request.AddHeader("Authorization", $"Bearer {token}");
 
         RestResponse response = _client.Execute(request);
-        Console.WriteLine($"View grades to student with id: {student_id}. Response: {response.Content}");
+        Console.WriteLine($"ViewGrades Response for student ID '{student_id}': {response.Content}");
 
         if (JObject.Parse(response.Content).ContainsKey(JsonIdentifierKeys.DetailKey))
         {

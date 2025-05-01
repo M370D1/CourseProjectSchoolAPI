@@ -26,7 +26,7 @@ namespace BackEndAutomation
         [When("teacher creates a class with {string} classname, {string} subject_1, {string} subject_2 and {string} subject_3.")]
         public void TeacherCreateClass_(string classname, string subject_1, string subject_2, string subject_3)
         {
-            _test.Info($"Creating class with classname: {classname} and subjects: {subject_1}, {subject_2}, {subject_3}");
+            _test.Info($"Attempting to create class '{classname}' with subjects: '{subject_1}', '{subject_2}', '{subject_3}'.");
 
             string token = _scenarioContext.Get<string>(ContextKeys.UserTokenKey);
             RestResponse response = _restCalls.CraeteClassCall(classname, subject_1, subject_2, subject_3, token);
@@ -37,7 +37,7 @@ namespace BackEndAutomation
             _scenarioContext.Add(ContextKeys.ClassNameKey, classname);
 
             Console.WriteLine(response.Content);
-            _test.Pass($"{classname} created successfully. Response message: {message}");
+            _test.Pass($"Class '{classname}' created successfully. Response message: \"{message}\".");
         }
 
         [Then("validate class is created {string}.")]
@@ -52,16 +52,16 @@ namespace BackEndAutomation
             Utilities.UtilitiesMethods.AssertEqual(
                 false,
                 isClassIdExtracted,
-                $"ClassID is not extracted or {classname} is not created.",
+                $"Validation failed: Class ID was not returned, indicating '{classname}' may not have been created.",
                 _scenarioContext);
 
             Utilities.UtilitiesMethods.AssertEqual(
                 expectedMessage,
                 actualMessage,
-                $"Creating {classname} failed.",
+                $"Validation failed: Expected message mismatch when creating class '{classname}'.",
                 _scenarioContext);
 
-            _test.Pass($"Creating class {classname} validation passed. {classname} with id: {class_id} is created .");
+            _test.Pass($"Validation passed: Class '{classname}' successfully created with ID '{class_id}'.");
         }
     }
 }

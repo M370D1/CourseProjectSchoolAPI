@@ -27,7 +27,7 @@ namespace BackEndAutomation
         [Given("user signs in with {string} username and {string} password.")]
         public void UserSignIn_(string username, string password)
         {
-            _test.Info($"Attempting to sign in with username: {username}");
+            _test.Info($"Attempting user sign-in with username: {username}.");
 
             RestResponse response = _restCalls.SignInUserCall(username, password);
             string tokenValue = _extractResponseData.Extractor(response.Content, JsonIdentifierKeys.AccessTokenKey);
@@ -35,7 +35,7 @@ namespace BackEndAutomation
             _scenarioContext.Add(ContextKeys.UserNameKey, username);
 
             Console.WriteLine(response.Content);
-            _test.Pass($"User {username} successfully signed in and token retrieved.");
+            _test.Pass($"User '{username}' successfully signed in. Access token retrieved.");
         }
 
         [Then("validate that the user is signed in.")]
@@ -47,10 +47,10 @@ namespace BackEndAutomation
             Utilities.UtilitiesMethods.AssertEqual(
                 false,
                 isTokenExtracted,
-                $"Token is not extracted or user {username} is not signed in",
+                $"Sign-in validation failed: Token not extracted or user '{username}' is not signed in.",
                 _scenarioContext);
 
-            _test.Pass($"Token validation passed. User {username} is signed in.");
+            _test.Pass($"Validation passed: User '{username}' is signed in and token is present.");
         }
     }
 }

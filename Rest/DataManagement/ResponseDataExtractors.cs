@@ -13,7 +13,7 @@ public class ResponseDataExtractors
         }
         catch (Exception ex)
         {
-            Console.WriteLine($"Error extracting {jsonIdentifier}: {ex.Message}");
+            Console.WriteLine($"Extractor Error: Unable to extract '{jsonIdentifier}' from response. Reason: {ex.Message}");
             return $"Error extracting {jsonIdentifier}";
         }
     }
@@ -40,7 +40,7 @@ public class ResponseDataExtractors
         }
         catch (Exception ex)
         {
-            Console.WriteLine($"Error extracting grades: {ex.Message}");
+            Console.WriteLine($"ExtractAllGrades Error: Unable to extract grades from key '{arrayKey}' with property '{propertyKey}'. Reason: {ex.Message}");
             return null;
         }
     }

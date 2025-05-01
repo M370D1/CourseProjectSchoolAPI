@@ -30,7 +30,7 @@ namespace BackEndAutomation
             var timestamp = DateTime.Now.ToString("yyyyMMdd_HHmmss");
             username = $"{username}_{timestamp}";
 
-            _test.Info($"Creating user with username: {username}, role: {role}");
+            _test.Info($"Attempting to create a user with username: {username} and role: {role}.");
 
             string token = _scenarioContext.Get<string>(ContextKeys.UserTokenKey);
             RestResponse response = _restCalls.CraeteUserCall(username, password, role, token);
@@ -40,30 +40,30 @@ namespace BackEndAutomation
             _scenarioContext[ContextKeys.UserNameKey] = username;
 
             Console.WriteLine(response.Content);
-            _test.Pass($"{username} {response.Content}");
+            _test.Pass($"User '{username}' with role '{role}' created successfully. Response message: {message}.");
         }
 
-        [Then("validate user is created.")]
-        public void ValidateUserIsCreated_()
+        [Then("validate user is created. {string}")]
+        public void ValidateUserIsCreated_(string expectedMessage)
         {
             string role = _scenarioContext.Get<string>(ContextKeys.RoleKey);
             string actualMessage = _scenarioContext.Get<string>(ContextKeys.MessageKey);
             string username = _scenarioContext.Get<string>(ContextKeys.UserNameKey);
-            string expectedMessage = $"{role} '{username}' created successfully";
+            expectedMessage = $"{role} '{username}' {expectedMessage}";
 
             Utilities.UtilitiesMethods.AssertEqual(
                 expectedMessage,
                 actualMessage,
-                $"Creating {role} failed.",
+                $"User creation failed for role '{role}' with username '{username}'.",
                 _scenarioContext);
 
-            _test.Pass($"{role} validation passed. {role} is created.");
+            _test.Pass($"Validation successful: User '{username}' with role '{role}' was created as expected.");
         }
 
         [When("admin try to create existing user with {string} username, {string} password, and {string} role.")]
         public void AdminTryToCreateExistingUser_(string username, string password, string role)
         {
-            _test.Info($"Trying to create existing user with username: {username}, role: {role}");
+            _test.Info($"Attempting to create an existing user with username: {username} and role: {role}.");
 
             string token = _scenarioContext.Get<string>(ContextKeys.UserTokenKey);
             RestResponse response = _restCalls.CraeteUserCall(username, password, role, token);
@@ -72,11 +72,11 @@ namespace BackEndAutomation
             _scenarioContext.Add(ContextKeys.RoleKey, role);
 
             Console.WriteLine(response.Content);
-            _test.Pass($"{username} {response.Content}");
+            _test.Pass($"Received expected error when trying to create existing user '{username}'. Response message: {detail}.");
         }
 
         [Then("validate user is already created {string}.")]
-        public void ThenValidateUserIsAlreadyCreated_(string expectedMessage)
+        public void ValidateUserIsAlreadyCreated_(string expectedMessage)
         {
             string role = _scenarioContext.Get<string>(ContextKeys.RoleKey);
             string actualMessage = _scenarioContext.Get<string>(ContextKeys.DetailKey);
@@ -84,10 +84,10 @@ namespace BackEndAutomation
             Utilities.UtilitiesMethods.AssertEqual(
                 expectedMessage,
                 actualMessage,
-                $"Validating {role} already exists - failed.",
+                $"Validation failed: Expected duplicate user creation error for role '{role}', but got a different message.",
                 _scenarioContext);
 
-            _test.Pass($"{role} is already existing.");
+            _test.Pass($"Validation successful: Duplicate user for role '{role}' was correctly identified by the system.");
         }
 
     }

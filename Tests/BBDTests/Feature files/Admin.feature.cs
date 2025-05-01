@@ -155,7 +155,7 @@ await this.FeatureBackgroundAsync();
  await testRunner.WhenAsync(string.Format("admin creates a user with \"{0}\" username, \"{1}\" password, and \"{2}\" role.", username, password, role), ((string)(null)), ((global::Reqnroll.Table)(null)), "When ");
 #line hidden
 #line 14
- await testRunner.ThenAsync("validate user is created.", ((string)(null)), ((global::Reqnroll.Table)(null)), "Then ");
+ await testRunner.ThenAsync("validate user is created. \"created successfully\"", ((string)(null)), ((global::Reqnroll.Table)(null)), "Then ");
 #line hidden
             }
             await this.ScenarioCleanupAsync();

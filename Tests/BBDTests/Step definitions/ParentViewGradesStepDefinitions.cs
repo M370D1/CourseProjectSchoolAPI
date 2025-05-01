@@ -26,7 +26,7 @@ namespace BackEndAutomation
         [When("parent view grades of student with id: {string}.")]
         public void ParentViewGrades_(string student_id)
         {
-            _test.Info($"View grades to student with id: {student_id}.");
+            _test.Info($"Parent is attempting to view grades for student with ID: {student_id}.");
 
             string token = _scenarioContext.Get<string>(ContextKeys.UserTokenKey);
             RestResponse response = _restCalls.ViewGradesCall(student_id, token);
@@ -37,7 +37,7 @@ namespace BackEndAutomation
             _scenarioContext.Add(ContextKeys.DetailKey, detail);
 
             Console.WriteLine(response.Content);
-            _test.Pass($"View grades to student with id: {student_id}. All grades: {allGrades}");
+            _test.Pass($"Grades successfully retrieved for student ID: {student_id}. Extracted grades: {allGrades}.");
         }
 
         [Then("validate grades are visible.")]
@@ -49,10 +49,10 @@ namespace BackEndAutomation
             Utilities.UtilitiesMethods.AssertEqual(
                 true,
                 areGradesExtracted,
-                "Grades not extracted or student doesn't have grades.",
+                "Grade extraction failed: No grades found or student has no assigned grades.",
                 _scenarioContext);
 
-            _test.Pass($"VALIDATION TEST PASSED: Grades are visible: {allGrades}");
+            _test.Pass($"Validation successful: Grades are visible for the student. Grades: {allGrades}.");
         }
 
         [Then("validate student id is invalid {string}.")]
@@ -63,10 +63,10 @@ namespace BackEndAutomation
             Utilities.UtilitiesMethods.AssertEqual(
                 expectedMessage,
                 actualMessage,
-                $"Validating invalid student id failed.",
+                $"Validation failed: Expected error message for invalid student ID not received.",
                 _scenarioContext);
 
-            _test.Pass($"Validation of invalid id passed.");
+            _test.Pass($"Validation successful: System correctly handled invalid student ID. Message: {expectedMessage}.");
         }
 
         [Then("validate student is not linked to parent {string}.")]
@@ -77,10 +77,10 @@ namespace BackEndAutomation
             Utilities.UtilitiesMethods.AssertEqual(
                 expectedMessage,
                 actualMessage,
-                $"Validating invalid student id failed.",
+                $"Validation failed: System did not return expected message for unlinked student-parent relation.",
                 _scenarioContext);
 
-            _test.Pass($"Validation of invalid id passed.");
+            _test.Pass($"Validation successful: Student is correctly not linked to the parent. Message: {expectedMessage}.");
         }
 
     }

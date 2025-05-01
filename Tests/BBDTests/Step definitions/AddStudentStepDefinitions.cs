@@ -27,7 +27,7 @@ namespace BackEndAutomation
         [When("teacher add student with {string} name and {string} class id.")]
         public void TeacherAddStudent(string studentName, string class_id)
         {
-            _test.Info($"Adding student with name: {studentName} and class id {class_id}");
+            _test.Info($"Sending request to add student '{studentName}' to class ID '{class_id}'.");
 
             string token = _scenarioContext.Get<string>(ContextKeys.UserTokenKey);
             RestResponse response = _restCalls.AddStudentCall(studentName, class_id, token);
@@ -39,7 +39,7 @@ namespace BackEndAutomation
             _scenarioContext.Add(ContextKeys.ClassIdKey, class_id);
 
             Console.WriteLine(response.Content);
-            _test.Pass($"{studentName} with {studentID} added successfully to class with class id: {class_id}. Response message: {message}");
+            _test.Pass($"Student '{studentName}' (ID: {studentID}) was successfully added to class '{class_id}'. API response: \"{message}\".");
         }
 
         [Then("validate that student is added {string}.")]
@@ -53,16 +53,16 @@ namespace BackEndAutomation
             Utilities.UtilitiesMethods.AssertEqual(
                 false,
                 isStudentIdExtracted,
-                $"Student ID is not extracted or {studentName} is not added.",
+                $"Failed to extract Student ID. This suggests that student '{studentName}' may not have been successfully added.",
                 _scenarioContext);
 
             Utilities.UtilitiesMethods.AssertEqual(
                 expectedMessage,
                 actualMessage,
-                $"Adding {studentName} failed.",
+                $"API response did not match expected result while adding student '{studentName}'.",
                 _scenarioContext);
 
-            _test.Pass($"Adding {studentName} validation passed. Student {studentName} is added to class with id {class_id}.");
+            _test.Pass($"Validation passed: Student '{studentName}' has been successfully added to class '{class_id}'.");
         }
 
         [Then("validate that student is not added {string}.")]
@@ -75,10 +75,10 @@ namespace BackEndAutomation
             Utilities.UtilitiesMethods.AssertEqual(
                 expectedMessage,
                 actualMessage,
-                $"Validating {studentName} is not added - failed.",
+                $"Validation failed: Expected error message when adding student '{studentName}' to class '{class_id}' was not returned.",
                 _scenarioContext);
 
-            _test.Pass($"Student {studentName} is not added to class with id {class_id}.");
+            _test.Pass($"Validation passed: Student '{studentName}' was correctly not added to class '{class_id}' as expected.");
         }
 
     }
