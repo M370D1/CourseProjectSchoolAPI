@@ -1,33 +1,4 @@
-﻿# name: .NET Build and Test
-
-# on:
-#   push:
-#     branches: [ main ]
-#   pull_request:
-#     branches: [ main ]
-
-# jobs:
-#   build-and-test:
-#     runs-on: windows-latest
-
-#     steps:
-#     - uses: actions/checkout@v3
-
-#     - name: Setup .NET
-#       uses: actions/setup-dotnet@v3
-#       with:
-#         dotnet-version: '8.0.x' or whatever version you're using
-
-#     - name: Restore dependencies
-#       run: dotnet restore
-
-#     - name: Build
-#       run: dotnet build --no-restore --configuration Release
-
-#     - name: Run Tests
-#       run: dotnet test --no-build --configuration Release --logger "trx"
-
-name: .NET Build and Test
+﻿name: .NET Build and Test
 
 on:
   push:
@@ -40,13 +11,12 @@ jobs:
     runs-on: windows-latest
 
     steps:
-    - name: Checkout code
-      uses: actions/checkout@v3
+    - uses: actions/checkout@v3
 
     - name: Setup .NET
       uses: actions/setup-dotnet@v3
       with:
-        dotnet-version: '8.0.x'
+        dotnet-version: '8.0.x' 
 
     - name: Restore dependencies
       run: dotnet restore
@@ -55,11 +25,5 @@ jobs:
       run: dotnet build --no-restore --configuration Release
 
     - name: Run Tests
-      run: dotnet test --no-build --configuration Release --logger "trx;LogFileName=test_results.trx" --verbosity normal
+      run: dotnet test --no-build --configuration Release --logger "trx"
 
-    - name: Upload test results
-      if: always()
-      uses: actions/upload-artifact@v2.3.1
-      with:
-        name: test-results
-        path: '**/TestResults/**/*.trx'
