@@ -78,3 +78,4 @@ Note: This project is for educational and demo purposes and assumes access to th
 
    During the testing process, several automated BDD tests have failed, revealing important bugs within the School API. Specifically, it was found that the API allows the creation of multiple classes with the same name, which can lead to data ambiguity. Additionally, a student can be added to a class using an invalid class_id, indicating insufficient validation. Another issue was detected where a grade can be added to a subject even when the required student_id is missing.
 
+NICE
