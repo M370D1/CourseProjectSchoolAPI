@@ -134,9 +134,12 @@ public class RestCalls
         if (!response.IsSuccessful)
         {
             Console.WriteLine($"API Error: {response.StatusCode} - {response.ErrorMessage}");
+            Console.WriteLine($"Response Content: {response.Content}");
             throw new Exception($"API Request Failed: {response.StatusCode}");
         }
 
         return response;
     }
+
+
 }
