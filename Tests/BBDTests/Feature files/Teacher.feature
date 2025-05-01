@@ -30,29 +30,17 @@ Examples:
 
 @Negative_flow
 Scenario Outline: Try to add stuednt to class with invalid class id
-	When teacher add student with "<name>" name and "<invalid_class_id>" class id.
-	Then validate that student is not added "<message>".
-
-Examples:
-	| name     | invalid_class_id | message                        |
-	| Student5 | invalid-class-id | Class ID is invalid or missing |
+	When teacher add student with "Student5" name and "invalid-class-id" class id.
+	Then validate that student is not added "Class ID is invalid or missing".
 
 @Positive_flow
-Scenario Outline: Add and update grade
-	When teacher add grade: "<grade>", to student: "<student_id>", in subject: "<subject>".
-	Then validate that grade is added to student "<message>".
-	And teacher update grade to "<newGrade>".
-	And validate that grade is updated "<newMessage>".
-
-Examples:
-	| student_id                           | subject  | grade | message     | newGrade | newMessage    |
-	| 2164e5a5-8c01-40e4-9210-6f38476cdd2a | Biologic | 2     | Grade added | 5        | Grade updated |
+Scenario: Add and update grade
+	When teacher add grade: "2", to student: "2164e5a5-8c01-40e4-9210-6f38476cdd2a", in subject: "Biologic".
+	Then validate that grade is added to student "Grade added".
+	And teacher update grade to "5".
+	And validate that grade is updated "Grade updated".
 	
 @Negative_flow
-Scenario Outline: Try to add grade to student with invalid id.
-	When teacher add grade: "<grade>", to student: "<student_id>", in subject: "<subject>".
-	Then validate that grade is added to student "<message>".
-
-Examples:
-	| student_id         | subject | grade | message                                   |
-	| invalid student id | Math    | 3     | Error adding grade. Student ID is invalid |
+Scenario: Try to add grade to student with invalid id.
+	When teacher add grade: "3", to student: "invalid-student-id", in subject: "Math".
+	Then validate that grade is added to student "Error adding grade. Student ID is invalid".

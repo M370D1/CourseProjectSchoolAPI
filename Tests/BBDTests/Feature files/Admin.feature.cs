@@ -120,8 +120,8 @@ await this.FeatureBackgroundAsync();
         [NUnit.Framework.TestAttribute()]
         [NUnit.Framework.DescriptionAttribute("Create user")]
         [NUnit.Framework.CategoryAttribute("Positive_flow")]
-        [NUnit.Framework.TestCaseAttribute("CREATING TEACHER", "brrrrrrs", "teacher11", "teacher", null)]
-        [NUnit.Framework.TestCaseAttribute("CREATING MODERATOR", "moderator", "moderator", "moderator", null)]
+        [NUnit.Framework.TestCaseAttribute("CREATING TEACHER", "Metodi", "teacher11", "teacher", null)]
+        [NUnit.Framework.TestCaseAttribute("CREATING MODERATOR", "Meto", "moderator", "moderator", null)]
         [NUnit.Framework.TestCaseAttribute("CREATING PARENT", "parent1", "parent1", "parent", null)]
         public async System.Threading.Tasks.Task CreateUser(string title, string username, string password, string role, string[] exampleTags)
         {
@@ -164,22 +164,11 @@ await this.FeatureBackgroundAsync();
         [NUnit.Framework.TestAttribute()]
         [NUnit.Framework.DescriptionAttribute("Try to create user that exists")]
         [NUnit.Framework.CategoryAttribute("Negative_flow")]
-        [NUnit.Framework.TestCaseAttribute("CREATING TEACHER", "teacher11", "teacher11", "teacher", "Username already exists", null)]
-        public async System.Threading.Tasks.Task TryToCreateUserThatExists(string title, string username, string password, string role, string message, string[] exampleTags)
+        public async System.Threading.Tasks.Task TryToCreateUserThatExists()
         {
-            string[] @__tags = new string[] {
+            string[] tagsOfScenario = new string[] {
                     "Negative_flow"};
-            if ((exampleTags != null))
-            {
-                @__tags = System.Linq.Enumerable.ToArray(System.Linq.Enumerable.Concat(@__tags, exampleTags));
-            }
-            string[] tagsOfScenario = @__tags;
             System.Collections.Specialized.OrderedDictionary argumentsOfScenario = new System.Collections.Specialized.OrderedDictionary();
-            argumentsOfScenario.Add("title", title);
-            argumentsOfScenario.Add("username", username);
-            argumentsOfScenario.Add("password", password);
-            argumentsOfScenario.Add("role", role);
-            argumentsOfScenario.Add("message", message);
             global::Reqnroll.ScenarioInfo scenarioInfo = new global::Reqnroll.ScenarioInfo("Try to create user that exists", null, tagsOfScenario, argumentsOfScenario, featureTags);
 #line 23
 this.ScenarioInitialize(scenarioInfo);
@@ -195,11 +184,11 @@ this.ScenarioInitialize(scenarioInfo);
 await this.FeatureBackgroundAsync();
 #line hidden
 #line 24
- await testRunner.WhenAsync(string.Format("admin try to create existing user with \"{0}\" username, \"{1}\" password, and \"{2}\" " +
-                            "role.", username, password, role), ((string)(null)), ((global::Reqnroll.Table)(null)), "When ");
+ await testRunner.WhenAsync("admin try to create existing user with \"teacher11\" username, \"teacher11\" password" +
+                        ", and \"teacher\" role.", ((string)(null)), ((global::Reqnroll.Table)(null)), "When ");
 #line hidden
 #line 25
- await testRunner.ThenAsync(string.Format("validate user is already created \"{0}\".", message), ((string)(null)), ((global::Reqnroll.Table)(null)), "Then ");
+ await testRunner.ThenAsync("validate user is already created \"Username already exists\".", ((string)(null)), ((global::Reqnroll.Table)(null)), "Then ");
 #line hidden
             }
             await this.ScenarioCleanupAsync();
@@ -208,22 +197,13 @@ await this.FeatureBackgroundAsync();
         [NUnit.Framework.TestAttribute()]
         [NUnit.Framework.DescriptionAttribute("Connecting parent to student")]
         [NUnit.Framework.CategoryAttribute("Positive_flow")]
-        [NUnit.Framework.TestCaseAttribute("parent1", "43bac5dc-ecba-4826-8b8d-204cecd07b18", "Parent linked to student", null)]
-        public async System.Threading.Tasks.Task ConnectingParentToStudent(string parent_Username, string student_Id, string message, string[] exampleTags)
+        public async System.Threading.Tasks.Task ConnectingParentToStudent()
         {
-            string[] @__tags = new string[] {
+            string[] tagsOfScenario = new string[] {
                     "Positive_flow"};
-            if ((exampleTags != null))
-            {
-                @__tags = System.Linq.Enumerable.ToArray(System.Linq.Enumerable.Concat(@__tags, exampleTags));
-            }
-            string[] tagsOfScenario = @__tags;
             System.Collections.Specialized.OrderedDictionary argumentsOfScenario = new System.Collections.Specialized.OrderedDictionary();
-            argumentsOfScenario.Add("parent_username", parent_Username);
-            argumentsOfScenario.Add("student_id", student_Id);
-            argumentsOfScenario.Add("message", message);
             global::Reqnroll.ScenarioInfo scenarioInfo = new global::Reqnroll.ScenarioInfo("Connecting parent to student", null, tagsOfScenario, argumentsOfScenario, featureTags);
-#line 32
+#line 29
 this.ScenarioInitialize(scenarioInfo);
 #line hidden
             if ((global::Reqnroll.TagHelper.ContainsIgnoreTag(scenarioInfo.CombinedTags) || global::Reqnroll.TagHelper.ContainsIgnoreTag(featureTags)))
@@ -236,11 +216,12 @@ this.ScenarioInitialize(scenarioInfo);
 #line 5
 await this.FeatureBackgroundAsync();
 #line hidden
-#line 33
- await testRunner.WhenAsync(string.Format("admin connect parent \"{0}\" to student with id: \"{1}\".", parent_Username, student_Id), ((string)(null)), ((global::Reqnroll.Table)(null)), "When ");
+#line 30
+ await testRunner.WhenAsync("admin connect parent \"parent1\" to student with id: \"43bac5dc-ecba-4826-8b8d-204ce" +
+                        "cd07b18\".", ((string)(null)), ((global::Reqnroll.Table)(null)), "When ");
 #line hidden
-#line 34
- await testRunner.ThenAsync(string.Format("validate parent is connected to student \"{0}\".", message), ((string)(null)), ((global::Reqnroll.Table)(null)), "Then ");
+#line 31
+ await testRunner.ThenAsync("validate parent is connected to student \"Parent linked to student\".", ((string)(null)), ((global::Reqnroll.Table)(null)), "Then ");
 #line hidden
             }
             await this.ScenarioCleanupAsync();
