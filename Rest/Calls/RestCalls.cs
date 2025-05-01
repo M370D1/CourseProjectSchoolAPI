@@ -57,7 +57,6 @@ public class RestCalls
         var request = new RestRequest($"/classes/create", Method.Post);
         request.AddHeader("Authorization", $"Bearer {token}");
 
-        // API expects query parameters, not form-data or JSON
         request.AddQueryParameter("class_name", classname);
         request.AddQueryParameter("subject_1", subject_1);
         request.AddQueryParameter("subject_2", subject_2);
