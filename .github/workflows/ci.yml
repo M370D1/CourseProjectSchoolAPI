@@ -21,8 +21,11 @@ jobs:
       - name: Restore dependencies
         run: dotnet restore
 
+      - name: List directory structure
+        run: dir # Lists all files and directories in the current directory
+
       - name: Build test project
-        run: dotnet build ./BackEndAutomation/BackEndAutomation.csproj --configuration Release --no-restore
+        run: dotnet build ./BackEndAutomation/BackEndAutomation.csproj --configuration Release --no-restore # Adjust path if necessary
 
       - name: List compiled files
         run: dir .\BackEndAutomation\bin\Release\net8.0
