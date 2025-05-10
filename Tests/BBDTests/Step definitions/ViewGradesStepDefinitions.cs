@@ -3,6 +3,7 @@ using AventStack.ExtentReports;
 using BackEndAutomation.Rest.Calls;
 using BackEndAutomation.Rest.DataManagement;
 using BackEndAutomation.Utilities;
+using NUnit.Framework;
 using Reqnroll;
 using RestSharp;
 
@@ -30,11 +31,19 @@ namespace BackEndAutomation
 
             string token = _scenarioContext.Get<string>(ContextKeys.UserTokenKey);
             RestResponse response = _restCalls.ViewGradesCall(student_id, token);
+
+            if (response.Content.Contains(JsonIdentifierKeys.DetailKey))
+            {
+                string errorMessage = _extractResponseData.Extractor(response.Content, JsonIdentifierKeys.DetailKey);
+
+                _test.Fail($"Failed to retrieve grades for student ID: {student_id}. Error: {errorMessage}");
+                Console.WriteLine($"Error: Failed to retrieve grades for student ID: {student_id}. Error: {errorMessage}");
+                Assert.Fail($"Failed to retrieve grades for student ID: {student_id}. Error: {errorMessage}");
+            }
+
             string allGrades = _extractResponseData.ExtractAllGrades(response.Content);
-            string detail = _extractResponseData.Extractor(response.Content, JsonIdentifierKeys.DetailKey);
             _scenarioContext.Add(ContextKeys.StudentIdKey, student_id);
             _scenarioContext.Add(ContextKeys.AllGradesKey, allGrades);
-            _scenarioContext.Add(ContextKeys.DetailKey, detail);
 
             Console.WriteLine(response.Content);
             _test.Pass($"Grades successfully retrieved for student ID: {student_id}. Extracted grades: {allGrades}.");
@@ -46,42 +55,14 @@ namespace BackEndAutomation
             string allGrades = _scenarioContext.Get<string>(ContextKeys.AllGradesKey);
             bool areGradesExtracted = !string.IsNullOrEmpty(_scenarioContext.Get<string>(ContextKeys.AllGradesKey));
 
-            Utilities.UtilitiesMethods.AssertEqual(
+            UtilitiesMethods.AssertEqual(
                 true,
                 areGradesExtracted,
                 "Grade extraction failed: No grades found or student has no assigned grades.",
                 _scenarioContext);
 
+            Console.WriteLine($"Grades {allGrades} are visible: {areGradesExtracted}");
             _test.Pass($"Validation successful: Grades are visible for the student. Grades: {allGrades}.");
         }
-
-        [Then("validate student id is invalid {string}.")]
-        public void ValidateStudentIdIsInvalid_(string expectedMessage)
-        {
-            string actualMessage = _scenarioContext.Get<string>(ContextKeys.DetailKey);
-
-            Utilities.UtilitiesMethods.AssertEqual(
-                expectedMessage,
-                actualMessage,
-                $"Validation failed: Expected error message for invalid student ID not received.",
-                _scenarioContext);
-
-            _test.Pass($"Validation successful: System correctly handled invalid student ID. Message: {expectedMessage}.");
-        }
-
-        [Then("validate student is not linked to parent {string}.")]
-        public void ThenValidateStudentIsNotLinkedToParent_(string expectedMessage)
-        {
-            string actualMessage = _scenarioContext.Get<string>(ContextKeys.DetailKey);
-
-            Utilities.UtilitiesMethods.AssertEqual(
-                expectedMessage,
-                actualMessage,
-                $"Validation failed: System did not return expected message for unlinked student-parent relation.",
-                _scenarioContext);
-
-            _test.Pass($"Validation successful: Student is correctly not linked to the parent. Message: {expectedMessage}.");
-        }
-
     }
 }

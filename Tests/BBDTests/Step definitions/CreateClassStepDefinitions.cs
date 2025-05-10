@@ -3,6 +3,7 @@ using AventStack.ExtentReports;
 using BackEndAutomation.Rest.Calls;
 using BackEndAutomation.Rest.DataManagement;
 using BackEndAutomation.Utilities;
+using NUnit.Framework;
 using Reqnroll;
 using RestSharp;
 
@@ -24,12 +25,25 @@ namespace BackEndAutomation
             _test = scenarioContext.Get<ExtentTest>(ContextKeys.ExtentTestKey);
         }
         [When("teacher creates a class with {string} classname, {string} subject_1, {string} subject_2 and {string} subject_3.")]
-        public void TeacherCreateClass_(string classname, string subject_1, string subject_2, string subject_3)
+        public void TeacherCreateClass_(string baseClassname, string subject_1, string subject_2, string subject_3)
         {
+
+            string classname = UtilitiesMethods.GenerateUniqueName(baseClassname);
+
             _test.Info($"Attempting to create class '{classname}' with subjects: '{subject_1}', '{subject_2}', '{subject_3}'.");
 
             string token = _scenarioContext.Get<string>(ContextKeys.UserTokenKey);
             RestResponse response = _restCalls.CraeteClassCall(classname, subject_1, subject_2, subject_3, token);
+
+            if (response.Content.Contains(JsonIdentifierKeys.DetailKey))
+            {
+                string errorMessage = _extractResponseData.Extractor(response.Content, JsonIdentifierKeys.DetailKey);
+
+                _test.Fail($"Failed to create class '{classname}' with subjects '{subject_1}', '{subject_2}', '{subject_3}'. Error: {errorMessage}");
+                Console.WriteLine($"Error while creating class. Class name: {classname}, Subjects: {subject_1}, {subject_2}, {subject_3}. Error: {errorMessage}");
+                Assert.Fail($"Failed to create class '{classname}'. Error: {errorMessage}");
+            }
+
             string message = _extractResponseData.Extractor(response.Content, JsonIdentifierKeys.MessageKey);
             string classID = _extractResponseData.Extractor(response.Content, JsonIdentifierKeys.ClassIdKey);
             _scenarioContext.Add(ContextKeys.MessageKey, message);
@@ -49,18 +63,19 @@ namespace BackEndAutomation
             string classname = _scenarioContext.Get<string>(ContextKeys.ClassNameKey);
             bool isClassIdExtracted = string.IsNullOrEmpty(_scenarioContext.Get<string>(ContextKeys.ClassIdKey));
 
-            Utilities.UtilitiesMethods.AssertEqual(
+            UtilitiesMethods.AssertEqual(
                 false,
                 isClassIdExtracted,
                 $"Validation failed: Class ID was not returned, indicating '{classname}' may not have been created.",
                 _scenarioContext);
 
-            Utilities.UtilitiesMethods.AssertEqual(
+            UtilitiesMethods.AssertEqual(
                 expectedMessage,
                 actualMessage,
                 $"Validation failed: Expected message mismatch when creating class '{classname}'.",
                 _scenarioContext);
 
+            Console.WriteLine($"{expectedMessage}");
             _test.Pass($"Validation passed: Class '{classname}' successfully created with ID '{class_id}'.");
         }
     }

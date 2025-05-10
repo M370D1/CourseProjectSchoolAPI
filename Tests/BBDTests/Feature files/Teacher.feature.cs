@@ -120,23 +120,11 @@ await this.FeatureBackgroundAsync();
         [NUnit.Framework.TestAttribute()]
         [NUnit.Framework.DescriptionAttribute("Create a class")]
         [NUnit.Framework.CategoryAttribute("Positive_flow")]
-        [NUnit.Framework.TestCaseAttribute("Class C", "Math", "History", "Biologic", "Class created", null)]
-        [NUnit.Framework.TestCaseAttribute("Class B", "Chemistry", "Physics", "Literature", "Class created", null)]
-        public async System.Threading.Tasks.Task CreateAClass(string classname, string subject_1, string subject_2, string subject_3, string message, string[] exampleTags)
+        public async System.Threading.Tasks.Task CreateAClass()
         {
-            string[] @__tags = new string[] {
+            string[] tagsOfScenario = new string[] {
                     "Positive_flow"};
-            if ((exampleTags != null))
-            {
-                @__tags = System.Linq.Enumerable.ToArray(System.Linq.Enumerable.Concat(@__tags, exampleTags));
-            }
-            string[] tagsOfScenario = @__tags;
             System.Collections.Specialized.OrderedDictionary argumentsOfScenario = new System.Collections.Specialized.OrderedDictionary();
-            argumentsOfScenario.Add("classname", classname);
-            argumentsOfScenario.Add("subject_1", subject_1);
-            argumentsOfScenario.Add("subject_2", subject_2);
-            argumentsOfScenario.Add("subject_3", subject_3);
-            argumentsOfScenario.Add("message", message);
             global::Reqnroll.ScenarioInfo scenarioInfo = new global::Reqnroll.ScenarioInfo("Create a class", null, tagsOfScenario, argumentsOfScenario, featureTags);
 #line 12
 this.ScenarioInitialize(scenarioInfo);
@@ -152,11 +140,11 @@ this.ScenarioInitialize(scenarioInfo);
 await this.FeatureBackgroundAsync();
 #line hidden
 #line 13
- await testRunner.WhenAsync(string.Format("teacher creates a class with \"{0}\" classname, \"{1}\" subject_1, \"{2}\" subject_2 an" +
-                            "d \"{3}\" subject_3.", classname, subject_1, subject_2, subject_3), ((string)(null)), ((global::Reqnroll.Table)(null)), "When ");
+ await testRunner.WhenAsync("teacher creates a class with \"classname\" classname, \"Math\" subject_1, \"History\" s" +
+                        "ubject_2 and \"Phtsics\" subject_3.", ((string)(null)), ((global::Reqnroll.Table)(null)), "When ");
 #line hidden
 #line 14
- await testRunner.ThenAsync(string.Format("validate class is created \"{0}\".", message), ((string)(null)), ((global::Reqnroll.Table)(null)), "Then ");
+ await testRunner.ThenAsync("validate class is created \"Class created\".", ((string)(null)), ((global::Reqnroll.Table)(null)), "Then ");
 #line hidden
             }
             await this.ScenarioCleanupAsync();
@@ -165,55 +153,13 @@ await this.FeatureBackgroundAsync();
         [NUnit.Framework.TestAttribute()]
         [NUnit.Framework.DescriptionAttribute("Add stuednt to class")]
         [NUnit.Framework.CategoryAttribute("Positive_flow")]
-        [NUnit.Framework.TestCaseAttribute("Student6", "ecadac35-dd50-4120-b876-411ec0d51cd9", "Student added", null)]
-        [NUnit.Framework.TestCaseAttribute("Student2", "2f2fa5e2-6c5e-4e58-80b4-bf469eff79e8", "Student added", null)]
-        public async System.Threading.Tasks.Task AddStuedntToClass(string name, string class_Id, string message, string[] exampleTags)
-        {
-            string[] @__tags = new string[] {
-                    "Positive_flow"};
-            if ((exampleTags != null))
-            {
-                @__tags = System.Linq.Enumerable.ToArray(System.Linq.Enumerable.Concat(@__tags, exampleTags));
-            }
-            string[] tagsOfScenario = @__tags;
-            System.Collections.Specialized.OrderedDictionary argumentsOfScenario = new System.Collections.Specialized.OrderedDictionary();
-            argumentsOfScenario.Add("name", name);
-            argumentsOfScenario.Add("class_id", class_Id);
-            argumentsOfScenario.Add("message", message);
-            global::Reqnroll.ScenarioInfo scenarioInfo = new global::Reqnroll.ScenarioInfo("Add stuednt to class", null, tagsOfScenario, argumentsOfScenario, featureTags);
-#line 22
-this.ScenarioInitialize(scenarioInfo);
-#line hidden
-            if ((global::Reqnroll.TagHelper.ContainsIgnoreTag(scenarioInfo.CombinedTags) || global::Reqnroll.TagHelper.ContainsIgnoreTag(featureTags)))
-            {
-                testRunner.SkipScenario();
-            }
-            else
-            {
-                await this.ScenarioStartAsync();
-#line 5
-await this.FeatureBackgroundAsync();
-#line hidden
-#line 23
- await testRunner.WhenAsync(string.Format("teacher add student with \"{0}\" name and \"{1}\" class id.", name, class_Id), ((string)(null)), ((global::Reqnroll.Table)(null)), "When ");
-#line hidden
-#line 24
- await testRunner.ThenAsync(string.Format("validate that student is added \"{0}\".", message), ((string)(null)), ((global::Reqnroll.Table)(null)), "Then ");
-#line hidden
-            }
-            await this.ScenarioCleanupAsync();
-        }
-        
-        [NUnit.Framework.TestAttribute()]
-        [NUnit.Framework.DescriptionAttribute("Try to add stuednt to class with invalid class id")]
-        [NUnit.Framework.CategoryAttribute("Negative_flow")]
-        public async System.Threading.Tasks.Task TryToAddStuedntToClassWithInvalidClassId()
+        public async System.Threading.Tasks.Task AddStuedntToClass()
         {
             string[] tagsOfScenario = new string[] {
-                    "Negative_flow"};
+                    "Positive_flow"};
             System.Collections.Specialized.OrderedDictionary argumentsOfScenario = new System.Collections.Specialized.OrderedDictionary();
-            global::Reqnroll.ScenarioInfo scenarioInfo = new global::Reqnroll.ScenarioInfo("Try to add stuednt to class with invalid class id", null, tagsOfScenario, argumentsOfScenario, featureTags);
-#line 32
+            global::Reqnroll.ScenarioInfo scenarioInfo = new global::Reqnroll.ScenarioInfo("Add stuednt to class", null, tagsOfScenario, argumentsOfScenario, featureTags);
+#line 17
 this.ScenarioInitialize(scenarioInfo);
 #line hidden
             if ((global::Reqnroll.TagHelper.ContainsIgnoreTag(scenarioInfo.CombinedTags) || global::Reqnroll.TagHelper.ContainsIgnoreTag(featureTags)))
@@ -226,11 +172,18 @@ this.ScenarioInitialize(scenarioInfo);
 #line 5
 await this.FeatureBackgroundAsync();
 #line hidden
-#line 33
- await testRunner.WhenAsync("teacher add student with \"Student5\" name and \"invalid-class-id\" class id.", ((string)(null)), ((global::Reqnroll.Table)(null)), "When ");
+#line 18
+ await testRunner.WhenAsync("teacher creates a class with \"classname\" classname, \"Math\" subject_1, \"History\" s" +
+                        "ubject_2 and \"Phtsics\" subject_3.", ((string)(null)), ((global::Reqnroll.Table)(null)), "When ");
 #line hidden
-#line 34
- await testRunner.ThenAsync("validate that student is not added \"Class ID is invalid or missing\".", ((string)(null)), ((global::Reqnroll.Table)(null)), "Then ");
+#line 19
+ await testRunner.ThenAsync("validate class is created \"Class created\".", ((string)(null)), ((global::Reqnroll.Table)(null)), "Then ");
+#line hidden
+#line 20
+ await testRunner.ThenAsync("teacher add student with \"name\" name and \"class_id\" class id.", ((string)(null)), ((global::Reqnroll.Table)(null)), "Then ");
+#line hidden
+#line 21
+ await testRunner.ThenAsync("validate that student is added \"Student added\".", ((string)(null)), ((global::Reqnroll.Table)(null)), "Then ");
 #line hidden
             }
             await this.ScenarioCleanupAsync();
@@ -245,7 +198,7 @@ await this.FeatureBackgroundAsync();
                     "Positive_flow"};
             System.Collections.Specialized.OrderedDictionary argumentsOfScenario = new System.Collections.Specialized.OrderedDictionary();
             global::Reqnroll.ScenarioInfo scenarioInfo = new global::Reqnroll.ScenarioInfo("Add and update grade", null, tagsOfScenario, argumentsOfScenario, featureTags);
-#line 37
+#line 24
 this.ScenarioInitialize(scenarioInfo);
 #line hidden
             if ((global::Reqnroll.TagHelper.ContainsIgnoreTag(scenarioInfo.CombinedTags) || global::Reqnroll.TagHelper.ContainsIgnoreTag(featureTags)))
@@ -258,51 +211,30 @@ this.ScenarioInitialize(scenarioInfo);
 #line 5
 await this.FeatureBackgroundAsync();
 #line hidden
-#line 38
- await testRunner.WhenAsync("teacher add grade: \"2\", to student: \"2164e5a5-8c01-40e4-9210-6f38476cdd2a\", in su" +
-                        "bject: \"Biologic\".", ((string)(null)), ((global::Reqnroll.Table)(null)), "When ");
+#line 25
+ await testRunner.WhenAsync("teacher creates a class with \"classname\" classname, \"Math\" subject_1, \"History\" s" +
+                        "ubject_2 and \"Phtsics\" subject_3.", ((string)(null)), ((global::Reqnroll.Table)(null)), "When ");
 #line hidden
-#line 39
+#line 26
+ await testRunner.ThenAsync("validate class is created \"Class created\".", ((string)(null)), ((global::Reqnroll.Table)(null)), "Then ");
+#line hidden
+#line 27
+ await testRunner.ThenAsync("teacher add student with \"name\" name and \"class_id\" class id.", ((string)(null)), ((global::Reqnroll.Table)(null)), "Then ");
+#line hidden
+#line 28
+ await testRunner.ThenAsync("validate that student is added \"Student added\".", ((string)(null)), ((global::Reqnroll.Table)(null)), "Then ");
+#line hidden
+#line 29
+ await testRunner.ThenAsync("teacher add grade: \"2\", to student: \"student-id\", in subject: \"History\".", ((string)(null)), ((global::Reqnroll.Table)(null)), "Then ");
+#line hidden
+#line 30
  await testRunner.ThenAsync("validate that grade is added to student \"Grade added\".", ((string)(null)), ((global::Reqnroll.Table)(null)), "Then ");
 #line hidden
-#line 40
+#line 31
  await testRunner.AndAsync("teacher update grade to \"5\".", ((string)(null)), ((global::Reqnroll.Table)(null)), "And ");
 #line hidden
-#line 41
+#line 32
  await testRunner.AndAsync("validate that grade is updated \"Grade updated\".", ((string)(null)), ((global::Reqnroll.Table)(null)), "And ");
-#line hidden
-            }
-            await this.ScenarioCleanupAsync();
-        }
-        
-        [NUnit.Framework.TestAttribute()]
-        [NUnit.Framework.DescriptionAttribute("Try to add grade to student with invalid id.")]
-        [NUnit.Framework.CategoryAttribute("Negative_flow")]
-        public async System.Threading.Tasks.Task TryToAddGradeToStudentWithInvalidId_()
-        {
-            string[] tagsOfScenario = new string[] {
-                    "Negative_flow"};
-            System.Collections.Specialized.OrderedDictionary argumentsOfScenario = new System.Collections.Specialized.OrderedDictionary();
-            global::Reqnroll.ScenarioInfo scenarioInfo = new global::Reqnroll.ScenarioInfo("Try to add grade to student with invalid id.", null, tagsOfScenario, argumentsOfScenario, featureTags);
-#line 44
-this.ScenarioInitialize(scenarioInfo);
-#line hidden
-            if ((global::Reqnroll.TagHelper.ContainsIgnoreTag(scenarioInfo.CombinedTags) || global::Reqnroll.TagHelper.ContainsIgnoreTag(featureTags)))
-            {
-                testRunner.SkipScenario();
-            }
-            else
-            {
-                await this.ScenarioStartAsync();
-#line 5
-await this.FeatureBackgroundAsync();
-#line hidden
-#line 45
- await testRunner.WhenAsync("teacher add grade: \"3\", to student: \"invalid-student-id\", in subject: \"Math\".", ((string)(null)), ((global::Reqnroll.Table)(null)), "When ");
-#line hidden
-#line 46
- await testRunner.ThenAsync("validate that grade is added to student \"Error adding grade. Student ID is invali" +
-                        "d\".", ((string)(null)), ((global::Reqnroll.Table)(null)), "Then ");
 #line hidden
             }
             await this.ScenarioCleanupAsync();

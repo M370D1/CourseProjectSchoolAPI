@@ -1,4 +1,4 @@
-﻿name: .NET Build and Test
+﻿﻿name: .NET Build and Test
 
 on:
   push:
@@ -7,7 +7,7 @@ on:
     branches: [ main ]
 
 jobs:
-  build-and-test:
+  build:
     runs-on: windows-latest
 
     steps:
@@ -16,7 +16,7 @@ jobs:
     - name: Setup .NET
       uses: actions/setup-dotnet@v3
       with:
-        dotnet-version: '8.0.x' 
+        dotnet-version: '8.0.x'
 
     - name: Restore dependencies
       run: dotnet restore
@@ -24,6 +24,20 @@ jobs:
     - name: Build
       run: dotnet build --no-restore --configuration Release
 
+  test:
+    runs-on: windows-latest
+    needs: build
+
+    steps:
+    - uses: actions/checkout@v3
+
+    - name: Setup .NET
+      uses: actions/setup-dotnet@v3
+      with:
+        dotnet-version: '8.0.x'
+
+    - name: Restore dependencies
+      run: dotnet restore
+
     - name: Run Tests
       run: dotnet test --no-build --configuration Release --logger "trx"
-

@@ -3,6 +3,7 @@ using AventStack.ExtentReports;
 using BackEndAutomation.Rest.Calls;
 using BackEndAutomation.Rest.DataManagement;
 using BackEndAutomation.Utilities;
+using NUnit.Framework;
 using Reqnroll;
 using RestSharp;
 
@@ -30,6 +31,16 @@ namespace BackEndAutomation
             _test.Info($"Attempting user sign-in with username: {username}.");
 
             RestResponse response = _restCalls.SignInUserCall(username, password);
+
+            if (response.Content.Contains(JsonIdentifierKeys.DetailKey))
+            {
+                string errorMessage = _extractResponseData.Extractor(response.Content, JsonIdentifierKeys.DetailKey);
+
+                _test.Fail($"User sign-in failed with username: {username}. Error: {errorMessage}");
+                Console.WriteLine($"Sign-in failed. Error: {errorMessage}");
+                Assert.Fail($"Sign-in failed for username: {username}. Error: {errorMessage}");
+            }
+
             string tokenValue = _extractResponseData.Extractor(response.Content, JsonIdentifierKeys.AccessTokenKey);
             _scenarioContext.Add(ContextKeys.UserTokenKey, tokenValue);
             _scenarioContext.Add(ContextKeys.UserNameKey, username);
@@ -44,12 +55,13 @@ namespace BackEndAutomation
             string username = _scenarioContext.Get<string>(ContextKeys.UserNameKey);
             bool isTokenExtracted = string.IsNullOrEmpty(_scenarioContext.Get<string>(ContextKeys.UserTokenKey));
 
-            Utilities.UtilitiesMethods.AssertEqual(
+            UtilitiesMethods.AssertEqual(
                 false,
                 isTokenExtracted,
                 $"Sign-in validation failed: Token not extracted or user '{username}' is not signed in.",
                 _scenarioContext);
 
+            Console.WriteLine($"{username} is signed in: {isTokenExtracted}");
             _test.Pass($"Validation passed: User '{username}' is signed in and token is present.");
         }
     }

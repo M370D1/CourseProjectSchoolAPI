@@ -4,6 +4,7 @@ using AventStack.ExtentReports;
 using BackEndAutomation.Rest.Calls;
 using BackEndAutomation.Rest.DataManagement;
 using BackEndAutomation.Utilities;
+using NUnit.Framework;
 using Reqnroll;
 using RestSharp;
 
@@ -29,18 +30,29 @@ namespace BackEndAutomation
         {
             int grade = _scenarioContext.Get<int>(ContextKeys.GradeKey);
             string student_id = _scenarioContext.Get<string>(ContextKeys.StudentIdKey);
-            string subject = _scenarioContext.Get<string> (ContextKeys.SubjectKey);
+            string subject = _scenarioContext.Get<string>(ContextKeys.SubjectKey);
+            string studentName = _scenarioContext.Get<string>(ContextKeys.StudentNameKey);
 
-            _test.Info($"Updating grade from {grade} to {newGrade} for student ID: {student_id} in subject: {subject}.");
+            _test.Info($"Updating grade from {grade} to {newGrade} for student {studentName} with ID: {student_id} in subject: {subject}.");
 
             string token = _scenarioContext.Get<string>(ContextKeys.UserTokenKey);
             RestResponse response = _restCalls.AddGradeCall(newGrade, student_id, subject, token);
+
+            if (response.Content.Contains(JsonIdentifierKeys.DetailKey))
+            {
+                string errorMessage = _extractResponseData.Extractor(response.Content, JsonIdentifierKeys.DetailKey);
+
+                _test.Fail($"Failed to update grade for student {studentName} with ID: {student_id} in subject: {subject}. Error: {errorMessage}");
+                Console.WriteLine($"Error updating grade for student {studentName} with ID: {student_id}, Subject: {subject}. Error: {errorMessage}");
+                Assert.Fail($"Failed to update grade for student {studentName} with ID: {student_id}, Subject: {subject}. Error: {errorMessage}");
+            }
+
             string message = _extractResponseData.Extractor(response.Content, JsonIdentifierKeys.MessageKey);
             _scenarioContext[ContextKeys.MessageKey] = message;
             _scenarioContext.Add(ContextKeys.NewGradeKey, newGrade);
 
             Console.WriteLine(response.Content);
-            _test.Pass($"Successfully updated grade from {grade} to {newGrade} for student ID: {student_id} in subject: {subject}. Response message: {message}.");
+            _test.Pass($"Successfully updated grade from {grade} to {newGrade} for student {studentName} with ID: {student_id} in subject: {subject}. Response message: {message}.");
         }
 
         [Then("validate that grade is updated {string}.")]
@@ -51,14 +63,16 @@ namespace BackEndAutomation
             int grade = _scenarioContext.Get<int>(ContextKeys.GradeKey);
             string subject = _scenarioContext.Get<string>(ContextKeys.SubjectKey);
             int newGrade = _scenarioContext.Get<int>(ContextKeys.NewGradeKey);
+            string studentName = _scenarioContext.Get<string>(ContextKeys.StudentNameKey);
 
-            Utilities.UtilitiesMethods.AssertEqual(
+            UtilitiesMethods.AssertEqual(
                 expectedMessage,
                 actualMessage,
-                $"Grade update failed: Expected message did not match actual when updating grade from {grade} to {newGrade} for student ID: {student_id} in subject: {subject}.",
+                $"Grade update failed: Expected message did not match actual when updating grade from {grade} to {newGrade} for student {studentName} with ID: {student_id} in subject: {subject}.",
                 _scenarioContext);
 
-            _test.Pass($"Validation passed: Grade successfully updated from {grade} to {newGrade} for student ID: {student_id} in subject: {subject}.");
+            Console.WriteLine($"{expectedMessage}");
+            _test.Pass($"Validation passed: Grade successfully updated from {grade} to {newGrade} for student {studentName} with ID: {student_id} in subject: {subject}.");
         }
     }
 }

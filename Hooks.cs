@@ -31,7 +31,7 @@ namespace BackEndAutomation
         [BeforeStep]
         public void BeforeStep()
         {
-            UtilitiesMethods.LogMessage("Start executing Step: " + _scenarioContext.StepContext.StepInfo.Text, _scenarioContext, LogStatuses.Debug);
+            UtilitiesMethods.LogMessage("Start executing Step: " + _scenarioContext.StepContext.StepInfo.Text, _scenarioContext, UtilitiesMethods.LogStatuses.Debug);
         }
 
         [AfterScenario]

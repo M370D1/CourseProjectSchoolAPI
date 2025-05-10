@@ -3,6 +3,7 @@ using AventStack.ExtentReports;
 using BackEndAutomation.Rest.Calls;
 using BackEndAutomation.Rest.DataManagement;
 using BackEndAutomation.Utilities;
+using NUnit.Framework;
 using Reqnroll;
 using RestSharp;
 
@@ -25,15 +26,24 @@ namespace BackEndAutomation
         }
 
         [When("admin creates a user with {string} username, {string} password, and {string} role.")]
-        public void AdminCreateUser_(string username, string password, string role)
+        public void AdminCreateUser_(string baseUsername, string password, string role)
         {
-            var timestamp = DateTime.Now.ToString("yyyyMMdd_HHmmss");
-            username = $"{username}_{timestamp}";
+            string username = UtilitiesMethods.GenerateUniqueName(baseUsername);
 
             _test.Info($"Attempting to create a user with username: {username} and role: {role}.");
 
             string token = _scenarioContext.Get<string>(ContextKeys.UserTokenKey);
             RestResponse response = _restCalls.CraeteUserCall(username, password, role, token);
+
+            if (response.Content.Contains(JsonIdentifierKeys.DetailKey))
+            {
+                string errorMessage = _extractResponseData.Extractor(response.Content, JsonIdentifierKeys.DetailKey);
+
+                _test.Fail($"Failed to create user '{username}' with role '{role}'. Error: {errorMessage}");
+                Console.WriteLine($"Error while creating user. Username: {username}, Role: {role}. Error: {errorMessage}");
+                Assert.Fail($"Failed to create user '{username}' with role '{role}'. Error: {errorMessage}");
+            }
+
             string message = _extractResponseData.Extractor(response.Content, JsonIdentifierKeys.MessageKey);
             _scenarioContext.Add(ContextKeys.MessageKey, message);
             _scenarioContext.Add(ContextKeys.RoleKey, role);
@@ -51,12 +61,13 @@ namespace BackEndAutomation
             string username = _scenarioContext.Get<string>(ContextKeys.UserNameKey);
             expectedMessage = $"{role} '{username}' {expectedMessage}";
 
-            Utilities.UtilitiesMethods.AssertEqual(
+            UtilitiesMethods.AssertEqual(
                 expectedMessage,
                 actualMessage,
                 $"User creation failed for role '{role}' with username '{username}'.",
                 _scenarioContext);
 
+            Console.WriteLine($"{expectedMessage}");
             _test.Pass($"Validation successful: User '{username}' with role '{role}' was created as expected.");
         }
 
@@ -67,6 +78,16 @@ namespace BackEndAutomation
 
             string token = _scenarioContext.Get<string>(ContextKeys.UserTokenKey);
             RestResponse response = _restCalls.CraeteUserCall(username, password, role, token);
+
+            if (response.IsSuccessful)
+            {
+                string successMessage = _extractResponseData.Extractor(response.Content, JsonIdentifierKeys.MessageKey);
+
+                _test.Fail($"Unexpected success when trying to create an existing user '{username}' with role '{role}'. Response: {successMessage}");
+                Console.WriteLine($"Unexpected success. User '{username}' with role '{role}' was created. Response: {successMessage}");
+                Assert.Fail($"Unexpected success. User '{username}' with role '{role}' was created. Response: {successMessage}");
+            }
+
             string detail = _extractResponseData.Extractor(response.Content, JsonIdentifierKeys.DetailKey);
             _scenarioContext.Add(ContextKeys.DetailKey, detail);
             _scenarioContext.Add(ContextKeys.RoleKey, role);
@@ -81,12 +102,13 @@ namespace BackEndAutomation
             string role = _scenarioContext.Get<string>(ContextKeys.RoleKey);
             string actualMessage = _scenarioContext.Get<string>(ContextKeys.DetailKey);
 
-            Utilities.UtilitiesMethods.AssertEqual(
+            UtilitiesMethods.AssertEqual(
                 expectedMessage,
                 actualMessage,
                 $"Validation failed: Expected duplicate user creation error for role '{role}', but got a different message.",
                 _scenarioContext);
 
+            Console.WriteLine($"{expectedMessage}");
             _test.Pass($"Validation successful: Duplicate user for role '{role}' was correctly identified by the system.");
         }
 

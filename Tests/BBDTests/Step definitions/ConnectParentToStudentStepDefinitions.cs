@@ -1,8 +1,11 @@
+
 using System;
 using AventStack.ExtentReports;
 using BackEndAutomation.Rest.Calls;
 using BackEndAutomation.Rest.DataManagement;
 using BackEndAutomation.Utilities;
+using Newtonsoft.Json.Linq;
+using NUnit.Framework;
 using Reqnroll;
 using RestSharp;
 
@@ -29,6 +32,16 @@ namespace BackEndAutomation
             _test.Info($"Initiating request to link parent '{parent_username}' with student ID '{student_id}'.");
             string token = _scenarioContext.Get<string>(ContextKeys.UserTokenKey);
             RestResponse response = _restCalls.ConnectParentCall(parent_username, student_id, token);
+
+            if (response.Content.Contains(JsonIdentifierKeys.DetailKey))
+            {
+                string errorMessage = _extractResponseData.Extractor(response.Content, JsonIdentifierKeys.DetailKey);
+
+                _test.Fail($"Failed to connect parent '{parent_username}' to student ID '{student_id}'. Error: {errorMessage}");
+                Console.WriteLine($"Error while linking parent. Parent: {parent_username}, Student ID: {student_id}. Error: {errorMessage}");
+                Assert.Fail($"Failed to link parent '{parent_username}' to student ID '{student_id}'. Error: {errorMessage}");
+            }
+
             string message = _extractResponseData.Extractor(response.Content, JsonIdentifierKeys.MessageKey);
             _scenarioContext.Add(ContextKeys.MessageKey, message);
             _scenarioContext.Add(ContextKeys.ParentUsernameKey, parent_username);
@@ -45,12 +58,13 @@ namespace BackEndAutomation
             string parent_username = _scenarioContext.Get<string>(ContextKeys.ParentUsernameKey);
             string student_id = _scenarioContext.Get<string>(ContextKeys.StudentIdKey);
 
-            Utilities.UtilitiesMethods.AssertEqual(
+            UtilitiesMethods.AssertEqual(
                 expectedMessage,
                 actualMessage,
                  $"Validation failed: Expected message does not match after connecting parent '{parent_username}' to student ID '{student_id}'.",
                 _scenarioContext);
 
+            Console.WriteLine($"{expectedMessage}");
             _test.Pass($"Validation successful: Parent '{parent_username}' is now connected to student ID '{student_id}'.");
         }
     }
