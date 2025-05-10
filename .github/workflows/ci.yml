@@ -11,8 +11,7 @@ jobs:
     runs-on: windows-latest
 
     steps:
-    - name: Checkout code
-      uses: actions/checkout@v3
+    - uses: actions/checkout@v3
 
     - name: Setup .NET
       uses: actions/setup-dotnet@v3
@@ -22,24 +21,21 @@ jobs:
     - name: Restore dependencies
       run: dotnet restore
 
-    - name: Build solution
-      run: dotnet build --configuration Release --no-restore
+    - name: Build
+      run: dotnet build --no-restore --configuration Release
 
     - name: Upload build output
-      uses: actions/upload-artifact@v3
+      uses: actions/upload-artifact@v4
       with:
         name: build-output
-        path: |
-          **/bin/Release/net8.0/
-          !**/obj/**
+        path: ./BackEndAutomation/bin/Release/net8.0/
 
   test:
     runs-on: windows-latest
     needs: build
 
     steps:
-    - name: Checkout code
-      uses: actions/checkout@v3
+    - uses: actions/checkout@v3
 
     - name: Setup .NET
       uses: actions/setup-dotnet@v3
@@ -47,9 +43,9 @@ jobs:
         dotnet-version: '8.0.x'
 
     - name: Download build output
-      uses: actions/download-artifact@v3
+      uses: actions/download-artifact@v4
       with:
         name: build-output
 
-    - name: Run tests
-      run: dotnet test --no-build --configuration Release --logger "trx"
+    - name: Run Tests
+      run: dotnet test ./BackEndAutomation.dll --no-build --configuration Release --logger "trx"
