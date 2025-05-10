@@ -22,7 +22,7 @@ jobs:
         run: dotnet restore
 
       - name: Build test project
-        run: dotnet build /BackEndAutomation/BackEndAutomation.csproj --configuration Release --no-restore
+        run: dotnet build ./BackEndAutomation/BackEndAutomation.csproj --configuration Release --no-restore
 
       - name: List compiled files
         run: dir .\BackEndAutomation\bin\Release\net8.0
