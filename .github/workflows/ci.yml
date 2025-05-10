@@ -1,4 +1,4 @@
-﻿name: .NET Build and Test
+﻿﻿name: .NET Build and Test
 
 on:
   push:
@@ -7,7 +7,7 @@ on:
     branches: [ main ]
 
 jobs:
-  build:
+  build-and-test:
     runs-on: windows-latest
 
     steps:
@@ -16,37 +16,13 @@ jobs:
     - name: Setup .NET
       uses: actions/setup-dotnet@v3
       with:
-        dotnet-version: '8.0.x'
+        dotnet-version: '8.0.x' 
 
     - name: Restore dependencies
       run: dotnet restore
 
-    - name: Build project
-      run: dotnet build --configuration Release
-
-    - name: Upload build artifacts
-      uses: actions/upload-artifact@v4
-      with:
-        name: build-output
-        path: ./BackEndAutomation/bin/Release/net8.0/
-
-  test:
-    runs-on: windows-latest
-    needs: build
-
-    steps:
-    - uses: actions/checkout@v3
-
-    - name: Setup .NET
-      uses: actions/setup-dotnet@v3
-      with:
-        dotnet-version: '8.0.x'
-
-    - name: Download build output
-      uses: actions/download-artifact@v4
-      with:
-        name: build-output
-        path: ./build-output
+    - name: Build
+      run: dotnet build --no-restore --configuration Release
 
     - name: Run Tests
-      run: dotnet test ./BackEndAutomation/BackEndAutomation.csproj --no-build --configuration Release --logger "trx"
+      run: dotnet test --no-build --configuration Release --logger "trx"
