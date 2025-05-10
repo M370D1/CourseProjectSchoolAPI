@@ -11,48 +11,44 @@ jobs:
     runs-on: windows-latest
 
     steps:
-      - uses: actions/checkout@v3
+    - name: Checkout source
+      uses: actions/checkout@v3
 
-      - name: Setup .NET
-        uses: actions/setup-dotnet@v3
-        with:
-          dotnet-version: '8.0.x'
+    - name: Setup .NET
+      uses: actions/setup-dotnet@v3
+      with:
+        dotnet-version: '8.0.x'
 
-      - name: Restore dependencies
-        run: dotnet restore
+    - name: Restore dependencies
+      run: dotnet restore
 
-      - name: List directory structure
-        run: dir # Lists all files and directories in the current directory
+    - name: Build test project
+      run: dotnet build ./BackEndAutomation.csproj --configuration Release --no-restore
 
-      - name: Build test project
-        run: dotnet build ./BackEndAutomation.csproj --configuration Release --no-restore
+    - name: List compiled files
+      run: dir .\bin\Release\net8.0
 
-      - name: List compiled files
-        run: dir .\BackEndAutomation\bin\Release\net8.0
-
-      - name: Upload test binaries
-        uses: actions/upload-artifact@v4
-        with:
-          name: test-binaries
-          path: ./BackEndAutomation/bin/Release/net8.0/
+    - name: Upload test binaries
+      uses: actions/upload-artifact@v4
+      with:
+        name: test-binaries
+        path: ./bin/Release/net8.0/
 
   test:
     runs-on: windows-latest
     needs: build
 
     steps:
-      - uses: actions/checkout@v3
+    - name: Download test binaries
+      uses: actions/download-artifact@v4
+      with:
+        name: test-binaries
+        path: ./test-binaries
 
-      - name: Setup .NET
-        uses: actions/setup-dotnet@v3
-        with:
-          dotnet-version: '8.0.x'
+    - name: Setup .NET
+      uses: actions/setup-dotnet@v3
+      with:
+        dotnet-version: '8.0.x'
 
-      - name: Download test binaries
-        uses: actions/download-artifact@v4
-        with:
-          name: test-binaries
-          path: ./test-binaries
-
-      - name: Run Tests
-        run: dotnet test ./test-binaries/BackEndAutomation.dll --logger "trx"
+    - name: Run Tests
+      run: dotnet test ./test-binaries/BackEndAutomation.dll --logger "trx"
