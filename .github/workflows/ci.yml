@@ -11,7 +11,8 @@ jobs:
     runs-on: windows-latest
 
     steps:
-    - uses: actions/checkout@v3
+    - name: Checkout repository
+      uses: actions/checkout@v3
 
     - name: Setup .NET
       uses: actions/setup-dotnet@v3
@@ -22,33 +23,35 @@ jobs:
       run: dotnet restore
 
     - name: Build
-      run: dotnet build --configuration Release
+      run: dotnet build --no-restore --configuration Release
 
-    - name: Upload build artifacts
+    - name: Upload test binaries
       uses: actions/upload-artifact@v4
       with:
         name: test-binaries
-        path: |
-          ./BackEndAutomation/bin/Release/net8.0/
-          ./BackEndAutomation/BackEndAutomation.csproj
+        path: ./BackEndAutomation/bin/Release/net8.0/
 
   test:
     runs-on: windows-latest
     needs: build
 
     steps:
-    - uses: actions/checkout@v3
+    - name: Checkout repository
+      uses: actions/checkout@v3
 
     - name: Setup .NET
       uses: actions/setup-dotnet@v3
       with:
         dotnet-version: '8.0.x'
 
-    - name: Download build artifacts
+    - name: Download test binaries
       uses: actions/download-artifact@v4
       with:
         name: test-binaries
-        path: ./BackEndAutomation
+        path: ./build-output
+
+    - name: List downloaded files (for debug)
+      run: dir ./build-output
 
     - name: Run Tests
-      run: dotnet test ./BackEndAutomation/BackEndAutomation.csproj --no-build --configuration Release --logger "trx"
+      run: dotnet test ./build-output/BackEndAutomation.dll --logger "trx"
