@@ -25,7 +25,7 @@ jobs:
         run: dir # Lists all files and directories in the current directory
 
       - name: Build test project
-        run: dotnet build ./BackEndAutomation/BackEndAutomation.csproj --configuration Release --no-restore # Adjust path if necessary
+        run: dotnet build ./BackEndAutomation.csproj --configuration Release --no-restore
 
       - name: List compiled files
         run: dir .\BackEndAutomation\bin\Release\net8.0
