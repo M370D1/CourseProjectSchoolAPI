@@ -16,16 +16,25 @@ jobs:
     - name: Setup .NET
       uses: actions/setup-dotnet@v3
       with:
-        dotnet-version: '8.0.x' 
+        dotnet-version: '8.0.x'
 
     - name: Restore dependencies
       run: dotnet restore
 
     - name: Build
-      run: dotnet build --no-restore --configuration Release
+      run: dotnet build --configuration Release
 
-  tests:
+    - name: Upload build artifacts
+      uses: actions/upload-artifact@v4
+      with:
+        name: test-binaries
+        path: |
+          ./BackEndAutomation/bin/Release/net8.0/
+          ./BackEndAutomation/BackEndAutomation.csproj
+
+  test:
     runs-on: windows-latest
+    needs: build
 
     steps:
     - uses: actions/checkout@v3
@@ -33,9 +42,13 @@ jobs:
     - name: Setup .NET
       uses: actions/setup-dotnet@v3
       with:
-        dotnet-version: '8.0.x' 
+        dotnet-version: '8.0.x'
 
-    - name: Restore dependencies
-      run: dotnet restore
+    - name: Download build artifacts
+      uses: actions/download-artifact@v4
+      with:
+        name: test-binaries
+        path: ./BackEndAutomation
+
     - name: Run Tests
-      run: dotnet test --no-build --configuration Release --logger "trx"
+      run: dotnet test ./BackEndAutomation/BackEndAutomation.csproj --no-build --configuration Release --logger "trx"
