@@ -21,14 +21,14 @@ jobs:
     - name: Restore dependencies
       run: dotnet restore
 
-    - name: Publish build output
-      run: dotnet publish --configuration Release --framework net8.0 --output ./publish
+    - name: Build project
+      run: dotnet build --configuration Release
 
-    - name: Upload build output
+    - name: Upload build artifacts
       uses: actions/upload-artifact@v4
       with:
-        name: build-output 
-        path: ./publish/
+        name: build-output
+        path: ./BackEndAutomation/bin/Release/net8.0/
 
   test:
     runs-on: windows-latest
@@ -45,7 +45,8 @@ jobs:
     - name: Download build output
       uses: actions/download-artifact@v4
       with:
-        name: build-output  
+        name: build-output
+        path: ./build-output
 
     - name: Run Tests
-      run: dotnet test ./build-output/BackEndAutomation.dll --no-build --logger "trx"
+      run: dotnet test ./BackEndAutomation/BackEndAutomation.csproj --no-build --configuration Release --logger "trx"
